@@ -7,7 +7,7 @@ public class Timer  {
 
     TimerComponent tc;
 
-    public Timer(GameObject go, UnityAction action, float time, int repetitions)
+    public Timer(GameObject go, UnityAction action, float time, int repetitions = 1)
     {
         tc = go.AddComponent<TimerComponent>();
 

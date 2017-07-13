@@ -14,11 +14,11 @@ public class TimerComponent : MonoBehaviour {
     {
         get
         {
-            return RepetitionsNumber;
+            return repetitionsNumber;
         }
         set
         {
-            RepetitionsNumber = value;
+            repetitionsNumber = value;
         }
     }
 
@@ -74,6 +74,7 @@ public class TimerComponent : MonoBehaviour {
                 repetitionsNumber--;
                 timeVar = timeSpan;
             }
+
         }
 
 	}
