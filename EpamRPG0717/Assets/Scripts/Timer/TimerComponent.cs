@@ -1,14 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 public class TimerComponent : MonoBehaviour {
 
-    private UnityAction action;
+    private Action act;
     private float timeSpan;
     private float timeVar;
     private int repetitionsNumber;
+
+
+    public Action ActionToDo {
+        get { return act; }
+        set { act = value; }
+    }
 
     public int RepetitionsNumber
     {
@@ -23,18 +28,7 @@ public class TimerComponent : MonoBehaviour {
     }
 
 
-    public UnityAction Action
-    {
-        get
-        {
-            return action;
-        }
 
-        set
-        {
-            action = value;
-        }
-    }
 
     public float TimeToWait
     {
@@ -70,7 +64,7 @@ public class TimerComponent : MonoBehaviour {
 
             if (timeVar <= 0)
             {
-                action();
+                act();
                 repetitionsNumber--;
                 timeVar = timeSpan;
             }

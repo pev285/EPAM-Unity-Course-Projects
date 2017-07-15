@@ -1,17 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 public class Timer  {
 
     TimerComponent tc;
 
-    public Timer(GameObject go, UnityAction action, float time, int repetitions = 1)
+    public Timer(GameObject go, Action action, float time, int repetitions = 1)
     {
         tc = go.AddComponent<TimerComponent>();
 
-        tc.Action = action;
+        tc.ActionToDo = action;
         tc.TimeToWait = time;
         tc.RepetitionsNumber = repetitions;
     }
