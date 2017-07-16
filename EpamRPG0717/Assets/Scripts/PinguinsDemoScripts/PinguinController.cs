@@ -12,7 +12,7 @@ public class PinguinController : MonoBehaviour {
 
 
     [SerializeField]
-        private GameObject go;
+        private GameObject bulletPrefab;
 
     [SerializeField]
         private float bulletInitialForce = 500f;
@@ -41,7 +41,7 @@ public class PinguinController : MonoBehaviour {
     private void Fire() {
 
         if (Input.GetKey(KeyCode.Space)) {
-            GameObject newBullet = Instantiate(go);
+            GameObject newBullet = Instantiate(bulletPrefab);
             GameObject respPoint = GameObject.Find("Pinguin_v01/Gun/RespawnPoint");
 //            GameObject respPoint = GameObject.Find("Target");
             Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
