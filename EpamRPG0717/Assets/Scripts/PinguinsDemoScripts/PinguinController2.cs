@@ -17,44 +17,42 @@ public class PinguinController2 : MonoBehaviour {
     private GameObject bulletSpawnPoint;
 
     [SerializeField]
-    private float bulletInitialVelocity = 30f;
+    private float bulletInitialVelocity = 15f;
 
-    Rigidbody rigidbody;
+    Rigidbody rgBody;
 
-    //[SerializeField]
+//[SerializeField]
     private Camera pinguinCam;
 
     private GameObject gun;
 
-// Use this for initialization
-    void Start () {
+	// Use this for initialization
+	void Start () {
 
-
-        rigidbody = GetComponent<Rigidbody>();
+        rgBody = GetComponent<Rigidbody>();
 
         pinguinCam = GameObject.Find("Pinguin2Camera").GetComponent<Camera>();
-        pinguinCam.enabled = false;
+//pinguinCam.enabled = false;
 
 
         gun = GameObject.Find("Pinguin_v02/Gun");
 
+    }
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
 
-    } // Start() //
 
-
-
-// Update is called once per frame
-    void FixedUpdate () {
-
+    void FixedUpdate() {
         if(Input.anyKey) {
-            ChooseCamera();
+//            ChooseCamera();
             ChooseWeapon();
             Move();
             Fire();
         }
-
-    } // Update() //
-
+    }
 
     private void ChooseCamera() {
         if (Input.GetKey(KeyCode.Alpha0)) {
@@ -76,22 +74,21 @@ public class PinguinController2 : MonoBehaviour {
     private void Move() {
 
         if (Input.GetKey(KeyCode.LeftArrow)) {
-            rigidbody.MoveRotation(rigidbody.rotation * Quaternion.Inverse(Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, Vector3.up )));
+            rgBody.MoveRotation(rgBody.rotation * Quaternion.Inverse(Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, Vector3.up )));
         }
         if (Input.GetKey(KeyCode.RightArrow)) {
-            rigidbody.MoveRotation(rigidbody.rotation * Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, Vector3.up ));
+            rgBody.MoveRotation(rgBody.rotation * Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, Vector3.up ));
         }
         if (Input.GetKey(KeyCode.UpArrow)) {
             Vector3 forward = transform.rotation * Vector3.forward;
-            rigidbody.MovePosition(transform.position + Time.deltaTime * speed * forward );
+            rgBody.MovePosition(transform.position + Time.deltaTime * speed * forward );
         }
         if (Input.GetKey(KeyCode.DownArrow)) {
             Vector3 backward = transform.rotation * Vector3.back;
-            rigidbody.MovePosition(transform.position + Time.deltaTime * speed * backward);
+            rgBody.MovePosition(transform.position + Time.deltaTime * speed * backward);
         }
 
     } // Move() //
-
 
     private void ChooseWeapon() {
 
@@ -105,6 +102,4 @@ public class PinguinController2 : MonoBehaviour {
     } // ChooseWeapon() //
 
 
-
-} // End Of Class
-
+} // End Of Class //

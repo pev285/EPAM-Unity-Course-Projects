@@ -2,6 +2,7 @@
 
 public static class SpecificationExtensionMethods
 {
+    /*
     public static ISpecification<TEntity> And<TEntity>(this ISpecification<TEntity> spec1, ISpecification<TEntity> spec2)
     {
         return new AndSpecification<TEntity>(spec1, spec2);
@@ -16,4 +17,5 @@ public static class SpecificationExtensionMethods
     {
         return new NotSpecification<TEntity>(spec);
     }
+    */
 }

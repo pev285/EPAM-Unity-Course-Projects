@@ -6,16 +6,16 @@ public class BulletScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 
-	void OnTriggerEnter(Collider other) {
+    void OnTriggerEnter(Collider other) {
 //        print("collision");
         Health h = other.gameObject.GetComponent<Health>();
         if (h != null) {
@@ -24,7 +24,10 @@ public class BulletScript : MonoBehaviour {
 
 //        Destroy(other.gameObject);
         Destroy(gameObject);
-	}
+    }
 
 
-} // BulletScript //
+}
+
+
+

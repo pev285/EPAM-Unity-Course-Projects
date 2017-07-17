@@ -18,7 +18,7 @@ public class PinguinController3 : MonoBehaviour {
     private GameObject bulletSpawnPoint;
 
     [SerializeField]
-    private float bulletInitialVelocity = 30f;
+    private float bulletInitialVelocity = 15f;
 
 
     private GameObject gun;
