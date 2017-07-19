@@ -3,8 +3,7 @@ public class SkillSpecification<TSkill> : IGameObjectSpecification {
 
 //    TSkill skill;
     public override string ToString() {
-//        TSkill a = new TSkill();
-        return "a skill"; //skill.name;
+        return (typeof (TSkill)).Name; //skill.name;
     }
 
 	public bool IsSatisfiedBy(UnityEngine.GameObject entity) {
