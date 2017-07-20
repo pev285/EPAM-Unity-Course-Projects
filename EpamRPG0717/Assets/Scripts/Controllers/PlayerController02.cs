@@ -34,6 +34,7 @@ public class PlayerController02 : MonoBehaviour {
     //private Vector3 defaultPlayer2cameraDirection = new Vector3(-0.7f, 0.7f, -0.2f);
 
 
+    private const float GROUND_EPS = 0.005f; //0.000001f;
 
     //private Quaternion defaultCameraRotation;
 
@@ -168,7 +169,7 @@ public class PlayerController02 : MonoBehaviour {
 
     // Is Player standing on the ground //
     private void CheckGround() {
-        grounded = Mathf.Abs(transform.position.y) < 0.000001f;
+        grounded = Mathf.Abs(transform.position.y) < GROUND_EPS;
 
         if (!grounded) {
             jumping = false;
