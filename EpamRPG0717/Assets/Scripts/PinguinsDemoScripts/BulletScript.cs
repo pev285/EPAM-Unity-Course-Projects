@@ -16,15 +16,14 @@ public class BulletScript : MonoBehaviour {
 
 
     void OnTriggerEnter(Collider other) {
-//        print("collision");
         Health h = other.gameObject.GetComponent<Health>();
         if (h != null) {
             h.ChangeHealthBy(-15);
         }
-
-//        Destroy(other.gameObject);
         Destroy(gameObject);
     }
+
+
 
 
 }

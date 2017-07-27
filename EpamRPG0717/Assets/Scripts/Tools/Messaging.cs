@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class Messaging  {
+public class Messaging {
+
 
     private static Text topText;
     private static Text centerText;
@@ -23,7 +24,7 @@ public class Messaging  {
         }, seconds);
     }
     public static void SetCenterTextFor(float seconds, string str) {
-            SetCenterText(str);
+        SetCenterText(str);
         Timer t = new Timer(centerText.gameObject, delegate  {
             SetCenterText("");
         }, seconds);
@@ -43,7 +44,6 @@ public class Messaging  {
         }, seconds);
     }
 
-
     public static void SetTopText(string str) {
         topText.text = str;
     }
@@ -60,7 +60,4 @@ public class Messaging  {
         techInfoText.text = str;
     }
 
-
-} // End of class //
-
-
+}

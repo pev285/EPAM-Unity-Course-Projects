@@ -5,14 +5,19 @@ public class Death : MonoBehaviour
 {
 
     private Health health;
-    private IAnimator animator;
-    private bool isDead;
+
+
+    private AbstractDeathVisualizer deathAnimator;
+
+
+    [SerializeField]
+    private bool isDead = false;
 
     // Use this for initialization
     void Start()
     {
         health = GetComponent<Health>();
-        animator = GetComponent<IAnimator>();
+        deathAnimator = GetComponent<AbstractDeathVisualizer>();
         isDead = false;
     }
 
@@ -21,8 +26,10 @@ public class Death : MonoBehaviour
     {
         if(!isDead && health.CurrentHP <= 0)
         {
-            animator.Die();
+            deathAnimator.Visualize();
             isDead = true;
         }
     }
+
+
 }

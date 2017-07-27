@@ -1,14 +1,12 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-
-public class TimerComponent : MonoBehaviour {
+public class TimerComponent : MonoBehaviour{
 
     private Action act;
     private float timeSpan;
     private float timeVar;
     private int repetitionsNumber;
-
 
     public Action ActionToDo {
         get { return act; }
@@ -45,15 +43,8 @@ public class TimerComponent : MonoBehaviour {
     }
 
 
+    void Update() {
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
         if (repetitionsNumber == 0)
         {
             Destroy(this);
@@ -70,6 +61,6 @@ public class TimerComponent : MonoBehaviour {
             }
 
         }
+    }
 
-	}
 }

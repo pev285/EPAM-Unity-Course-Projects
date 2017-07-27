@@ -53,6 +53,8 @@ public class PlayerController02 : MonoBehaviour {
     [SerializeField]
     private float cameraAloneRotationAmount = 0;
     [SerializeField]
+    private float cameraVerticalRotationAmount = 0;
+    [SerializeField]
     private float stepAside = 0;
 
 
@@ -68,6 +70,8 @@ public class PlayerController02 : MonoBehaviour {
 
     [SerializeField]
     private bool attacking = false;
+    [SerializeField]
+    private bool magnitoAttacking = false;
     [SerializeField]
     private bool jumping = false;
     [SerializeField]
@@ -96,7 +100,7 @@ public class PlayerController02 : MonoBehaviour {
         animator = GetComponent<Animator>();
 
         headTop = GameObject.Find("Player/HeadTop");
-        playerCamera = GameObject.Find("Player/PlayerCamera");
+        playerCamera = GameObject.Find("PlayerCamera");
         powerAttackPoint = GameObject.Find("Player/PowerAttackPoint");
 
         SetCameraDefaults();
@@ -141,7 +145,7 @@ public class PlayerController02 : MonoBehaviour {
         //ChooseWeapon();
         ReadMovementControls();
 
-        SetScreenInformation();
+        //SetScreenInformation();
     }
 
     void FixedUpdate() {
@@ -152,6 +156,35 @@ public class PlayerController02 : MonoBehaviour {
     }
 
 
+    /*
+    private void LateUpdate()
+    {
+
+
+        // Character rotation //
+        if (rotationAmount != 0)
+        {
+            // Adjast Player Camera //
+            Quaternion quaternion = Quaternion.AngleAxis(rotationSpeed * rotationAmount, Vector3.up);
+            cameraDirection = quaternion * cameraDirection;
+        }
+
+        if (cameraAloneRotationAmount != 0)
+        {
+            Quaternion quaternion = Quaternion.AngleAxis(rotationSpeed * cameraAloneRotationAmount, Vector3.up);
+            cameraDirection = quaternion * cameraDirection;
+        }
+
+
+        cameraVertRotation -= cameraVerticalRotationAmount;// verticalViewAngleChange;
+
+
+
+
+
+        MoveCamera();
+    }
+    //*/
 
 
     private void SetScreenInformation() {
@@ -230,11 +263,15 @@ public class PlayerController02 : MonoBehaviour {
             attacking = true;
         }
 
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            magnitoAttacking = true;
+        }
 
-// Move Camera // *****************************************************************
+        // Move Camera // *****************************************************************
 
         // Vertical camera position //
-        cameraVertRotation -= verticalViewAngleChange;
+        cameraVerticalRotationAmount = verticalViewAngleChange;
 
 
         // Adjast Player to Camera Distance //
@@ -271,7 +308,7 @@ public class PlayerController02 : MonoBehaviour {
             rgBody.AddForce((transform.up) * jumpUpForce, ForceMode.Impulse);
 
         }
-
+        
         // Wind attack //
         if (attacking && grounded) {
             animator.SetTrigger(attackHash);
@@ -279,6 +316,18 @@ public class PlayerController02 : MonoBehaviour {
 
             new Timer(this.gameObject, delegate {
                 BlowThemAway();
+            }, 0.5f);
+
+        }
+
+        // Magnito attack //
+        if (magnitoAttacking && grounded)
+        {
+            animator.SetTrigger(attackHash);
+            magnitoAttacking = false;
+
+            new Timer(this.gameObject, delegate {
+                MagnitoForce();
             }, 0.5f);
 
         }
@@ -329,15 +378,21 @@ public class PlayerController02 : MonoBehaviour {
         if (rotationAmount != 0) {
             rgBody.MoveRotation(rgBody.rotation * Quaternion.AngleAxis(rotationSpeed * rotationAmount, Vector3.up ));
 
+            //*
             // Adjast Player Camera //
             Quaternion quaternion = Quaternion.AngleAxis(rotationSpeed * rotationAmount, Vector3.up);
             cameraDirection = quaternion * cameraDirection;
+            // */
         }
-
+//*
         if (cameraAloneRotationAmount != 0) {
             Quaternion quaternion = Quaternion.AngleAxis(rotationSpeed * cameraAloneRotationAmount, Vector3.up);
             cameraDirection = quaternion * cameraDirection;
         }
+
+
+        cameraVertRotation -= cameraVerticalRotationAmount;// verticalViewAngleChange;
+        //*/
 
 
     }
@@ -345,18 +400,45 @@ public class PlayerController02 : MonoBehaviour {
 
 
     // Superpower //
-    private void BlowThemAway() {
+    private void BlowThemAway()
+    {
         Vector3 explosionPos = powerAttackPoint.transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPos, attackRadius);
 
-        foreach (Collider col in colliders) {
+        foreach (Collider col in colliders)
+        {
             Rigidbody rb = col.GetComponent<Rigidbody>();
 
-            if (rb != null) {
+            if (rb != null)
+            {
                 rb.AddExplosionForce(powerAttackForce, explosionPos, attackRadius, 3.0F);
             }
         } // foreach collider //
     } // end of  BlowThemAway() //
+
+
+
+
+
+
+    // Superpower //
+    private void MagnitoForce()
+    {
+        Vector3 explosionPos = powerAttackPoint.transform.position;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, attackRadius);
+
+        foreach (Collider col in colliders)
+        {
+            Rigidbody rb = col.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                rb.AddForce((transform.position - rb.position).normalized * powerAttackForce);
+            }
+        } // foreach collider //
+    } // end of  MagnitoForce() //
+
+
 
 
 
