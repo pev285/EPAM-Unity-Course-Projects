@@ -1,9 +1,12 @@
 public class RunForwardCommand : AbstractCommand{
 
-    public RunForwardCommand(CharacterModel model) {
+    private CharacterModel cmodel;
 
+    public RunForwardCommand(CharacterModel model) {
+        this.cmodel = model;
     }
 
     public override void Execute() {
+        cmodel.MoveForward();
     }
 }

@@ -1,9 +1,12 @@
 public class WalkBackCommand : AbstractCommand {
 
-    public WalkBackCommand(CharacterModel model) {
+    private CharacterModel cmodel;
 
+    public WalkBackCommand(CharacterModel model) {
+        this.cmodel = model;
     }
 
     public override void Execute() {
+        cmodel.MoveBackward();
     }
 }

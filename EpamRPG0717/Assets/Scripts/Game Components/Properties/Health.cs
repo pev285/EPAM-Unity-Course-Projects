@@ -5,11 +5,11 @@ using UnityEngine;
 public class Health : MonoBehaviour {
 
     [SerializeField]
-    private int maxHP;
+    private float maxHP = 100;
     [SerializeField]
-    private int currentHP;
+    private float currentHP;
 
-    public int MaxHP
+    public float MaxHP
     {
         get
         {
@@ -22,7 +22,7 @@ public class Health : MonoBehaviour {
         }
     }
 
-    public int CurrentHP
+    public float CurrentHP
     {
         get
         {
@@ -35,7 +35,7 @@ public class Health : MonoBehaviour {
         }
     }
 
-    public void ChangeHealthBy(int points)
+    public void ChangeHealthBy(float points)
     {
         CurrentHP += points;
         if (CurrentHP > MaxHP)

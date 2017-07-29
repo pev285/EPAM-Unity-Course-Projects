@@ -28,6 +28,18 @@ public class Death : MonoBehaviour
         {
             deathAnimator.Visualize();
             isDead = true;
+
+
+            // Turn off animations // ////////////////////////
+            Animator animator = GetComponent<Animator>();
+            if (animator != null) {
+                animator.enabled = false;
+            }
+            Animation animation = GetComponent<Animation>();
+            if (animation != null) {
+                animation.enabled = false;
+            }
+            ///////////////////////////////////////////////////
         }
     }
 

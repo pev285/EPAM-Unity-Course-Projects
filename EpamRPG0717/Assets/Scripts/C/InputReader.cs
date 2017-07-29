@@ -10,24 +10,13 @@ public class InputReader : MonoBehaviour {
     private GameObject playerCamera;
 
     private CharacterModel characterModel;
-    private PlayerCameraModel cameraModel;
+    private SatelliteModel cameraModel;
+//    private AbstractControllingModel characterModel;
+//    private AbstractControllingModel cameraModel;
 
 
     ////////////////////////////////////////////////////////////
 
-    [SerializeField]
-    private const float mouseWeelSpeed = 3.0f;
-    [SerializeField]
-    private float vertRotationSpeed = 0.5f;
-    [SerializeField]
-    private float horizRotationSpeed = 0.5f;
-
-
-
-    [SerializeField]
-    private float runSpeed = 120f;
-    [SerializeField]
-    private float walkSpeed = 80f;
 
 
 
@@ -54,6 +43,10 @@ public class InputReader : MonoBehaviour {
     private AbstractCommand mouse0Command = AbstractCommand.noCommand;
     private AbstractCommand mouse1Command = AbstractCommand.noCommand;
     private AbstractCommand mouse2Command = AbstractCommand.noCommand;
+    private AbstractCommand mouseWheelRotationCommand = AbstractCommand.noCommand;
+
+    private AbstractCommand mouseRotateHorizontalCommand = AbstractCommand.noCommand;
+    private AbstractCommand mouseRotateVerticalCommand = AbstractCommand.noCommand;
 
     private AbstractCommand keyACommand = AbstractCommand.noCommand;
     private AbstractCommand keySCommand = AbstractCommand.noCommand;
@@ -83,17 +76,25 @@ public class InputReader : MonoBehaviour {
     private AbstractCommand keypad9Command = AbstractCommand.noCommand;
     private AbstractCommand keypad0Command = AbstractCommand.noCommand;
 
+    private AbstractCommand leftControlCommand = AbstractCommand.noCommand;
+    private AbstractCommand rightControlCommand = AbstractCommand.noCommand;
+    private AbstractCommand leftShiftCommand = AbstractCommand.noCommand;
+    private AbstractCommand rightShiftCommand = AbstractCommand.noCommand;
+    private AbstractCommand leftAltCommand = AbstractCommand.noCommand;
+    private AbstractCommand rightAltCommand = AbstractCommand.noCommand;
 
 
     [SerializeField]
     private GameObject stonePrefab;
     [SerializeField]
     private GameObject arrowPrefab;
+    [SerializeField]
+    private GameObject magnetPrefab;
 
 // Use this for initialization
 	void Start () {
 		characterModel = player.GetComponent<CharacterModel>();
-        cameraModel = playerCamera.GetComponent<PlayerCameraModel>();
+        cameraModel = playerCamera.GetComponent<SatelliteModel>();
 
 
         /////////////////////////////
@@ -101,10 +102,10 @@ public class InputReader : MonoBehaviour {
 
         spells = player.GetComponent<EquippedSpells>();
 
-        spells.AddSpell(new SimpleDistantSpell(new StoneThrowingAction(stonePrefab)));
         spells.AddSpell(new SimpleDistantSpell(new BowShotAction(arrowPrefab)));
+        spells.AddSpell(new SimpleDistantSpell(new StoneThrowingAction(stonePrefab)));
         spells.AddSpell(new SimpleDistantSpell(new WindSpellAction()));
-        spells.AddSpell(new SimpleDistantSpell(new MagnetoSpellAction()));
+        spells.AddSpell(new SimpleDistantSpell(new MagnetoSpellAction(magnetPrefab)));
         ///////
 
 
@@ -113,14 +114,32 @@ public class InputReader : MonoBehaviour {
 
     private void InitiateCommands() {
 
+        // Spell choose and cast //
         leftArrowCommand = new PreviousSpellCommand(spells);
         rightArrowCommand = new NextSpellCommand(spells);
-        mouse0Command = new CastCurrentSpellCommand(player, spells);
+        mouse0Command = new CastCurrentSpellCommand(player, spells, characterModel);
 
+        // Character movement //
         keyACommand = new WalkLeftCommand(characterModel);
         keyDCommand = new WalkRightCommand(characterModel);
         keySCommand = new WalkBackCommand(characterModel);
         keyWCommand = new RunForwardCommand(characterModel);
+
+        spaceCommand = new JumpCommand(characterModel);
+
+        // Horizontal and vertical rotation //
+        mouseRotateHorizontalCommand = new TurnViewHorizontalCommand(characterModel, cameraModel);
+        mouseRotateVerticalCommand = new TurnViewVerticalCommand(characterModel, cameraModel);
+
+        // Rotate camera but not character //
+        rightControlCommand = new MoveSatelliteModeCommand(cameraModel);
+
+        // Set camera default position //
+        keypad5Command = new CameraDefaultPositionCommand(cameraModel);
+        mouse2Command = keypad5Command;
+
+        // Change distance from camera to character //
+        mouseWheelRotationCommand = new MouseWheelRotationCommand(cameraModel);
     }
 
 
@@ -244,6 +263,40 @@ public class InputReader : MonoBehaviour {
         if (Input.GetKey(KeyCode.Keypad9)) {
             keypad9Command.Execute();
         }
+
+        if (Input.GetKey(KeyCode.LeftAlt)) {
+            leftAltCommand.Execute();
+        }
+        if (Input.GetKey(KeyCode.RightAlt)) {
+            rightAltCommand.Execute();
+        }
+        if (Input.GetKey(KeyCode.LeftControl)) {
+            leftControlCommand.Execute();
+        }
+        if (Input.GetKey(KeyCode.RightControl)) {
+            rightControlCommand.Execute();
+        }
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            leftShiftCommand.Execute();
+        }
+        if (Input.GetKey(KeyCode.RightShift)) {
+            rightShiftCommand.Execute();
+        }
+
+
+
+
+
+
+//        print(Input.GetAxis("Mouse X") + "---" + Input.GetAxis("Mouse X") + "---" + Input.GetAxis("Mouse X"));
+//        if (Input.GetAxis("Mouse X") != 0) {
+            mouseRotateHorizontalCommand.Execute();
+//        }
+//        if(Input.GetAxis("Mouse Y") != 0) {
+            mouseRotateVerticalCommand.Execute();
+//        }
+
+        mouseWheelRotationCommand.Execute();
 
     } // InputProcessing() //
 

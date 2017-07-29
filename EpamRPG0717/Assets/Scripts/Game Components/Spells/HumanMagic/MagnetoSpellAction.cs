@@ -15,7 +15,8 @@ public class MagnetoSpellAction : AbstractSpellAction {
     }
 
     [SerializeField]
-    private Vector3 relativeSpellCastPosition = new Vector3(0, 0, 1f);
+//    private Vector3 relativeSpellCastPosition = new Vector3(0, 0, 1f);
+    private float spellCastDistance = 1;
     [SerializeField]
     private float attackRadius = 4f;
     [SerializeField]
@@ -24,9 +25,25 @@ public class MagnetoSpellAction : AbstractSpellAction {
 
     private float upwardsModifier = 3.0F;
 
+    private GameObject magnetPrefab;
+
+    public MagnetoSpellAction(GameObject magnetPrefab) {
+
+        this.magnetPrefab = magnetPrefab;
+
+    }
+
     public override void Cast(GameObject caster) {
 
-        Vector3 explosionPos = caster.transform.position + relativeSpellCastPosition;
+        Vector3 explosionPos = caster.transform.position + caster.transform.forward * spellCastDistance;
+
+        // Visualize //////
+
+        MagnetoVisualizer magnetoVisualizer = new MagnetoVisualizer(caster, magnetPrefab, explosionPos);
+        magnetoVisualizer.Visualize();
+
+        ////////////////////
+
         Collider[] colliders = Physics.OverlapSphere(explosionPos, attackRadius);
 
         foreach (Collider col in colliders)
@@ -35,7 +52,7 @@ public class MagnetoSpellAction : AbstractSpellAction {
 
             if (rb != null)
             {
-                rb.AddForce((caster.transform.position - rb.position).normalized * powerAttackForce);
+                rb.AddForce((explosionPos - rb.position).normalized * powerAttackForce);
             }
         } // foreach collider //
     }

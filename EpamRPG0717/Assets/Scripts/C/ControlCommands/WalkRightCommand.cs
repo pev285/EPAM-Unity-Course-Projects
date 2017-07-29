@@ -1,9 +1,12 @@
 public class WalkRightCommand : AbstractCommand{
 
-    public WalkRightCommand(CharacterModel model) {
+    private CharacterModel cmodel;
 
+    public WalkRightCommand(CharacterModel model) {
+        this.cmodel = model;
     }
 
     public override void Execute() {
+        cmodel.MoveRight();
     }
 }

@@ -16,7 +16,8 @@ public class WindSpellAction : AbstractSpellAction {
     }
 
     [SerializeField]
-    private Vector3 relativeSpellCastPosition = new Vector3(0, 0, 1f);
+    //private Vector3 relativeSpellCastPosition = new Vector3(0, 0, 1f);
+    private float spellCastDistance = 1;
     [SerializeField]
     private float attackRadius = 4f;
     [SerializeField]
@@ -27,7 +28,7 @@ public class WindSpellAction : AbstractSpellAction {
 
     public override void Cast(GameObject caster) {
 
-        Vector3 explosionPos = caster.transform.position + relativeSpellCastPosition;
+        Vector3 explosionPos = caster.transform.position + caster.transform.forward * spellCastDistance;
         Collider[] colliders = Physics.OverlapSphere(explosionPos, attackRadius);
 
         foreach (Collider col in colliders)

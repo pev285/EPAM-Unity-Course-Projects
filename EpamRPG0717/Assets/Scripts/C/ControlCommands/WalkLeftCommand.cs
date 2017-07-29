@@ -1,9 +1,12 @@
 public class WalkLeftCommand : AbstractCommand {
 
-    public WalkLeftCommand(CharacterModel model) {
+    private CharacterModel cmodel;
 
+    public WalkLeftCommand(CharacterModel model) {
+        this.cmodel = model;
     }
 
     public override void Execute() {
+        cmodel.MoveLeft();
     }
 }
