@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: a2766090233faea4ca440d34a9c0c31a
+timeCreated: 1501590391
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - player: {fileID: 1947451937600284, guid: 18b59714d51ee1b439183eb86eea3df6, type: 2}
+  - playerCamera: {fileID: 1274822075142502, guid: 473495bfa067805498c12bcf65e0aa67,
+      type: 2}
+  - targetingPoint: {fileID: 1528746199232524, guid: 18b59714d51ee1b439183eb86eea3df6,
+      type: 2}
+  - stonePrefab: {fileID: 1676468104108014, guid: aebd802f2dc620947baa32f06873d9bd,
+      type: 2}
+  - arrowPrefab: {fileID: 1260566215666858, guid: f2881d93fcce0c14e85bfc4c054d70c1,
+      type: 2}
+  - magnetPrefab: {fileID: 1294667106493508, guid: 8347db7838dd1db4f97fb664a0ea74e2,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

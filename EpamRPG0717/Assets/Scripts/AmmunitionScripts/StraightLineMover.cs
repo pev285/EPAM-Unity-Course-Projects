@@ -3,7 +3,7 @@ using UnityEngine;
 public class StraightLineMover : MonoBehaviour {
 
     [SerializeField]
-    private float moveSpeed = 10f;
+    private float moveSpeed = 40f;
 
     [SerializeField]
     private Vector3 moveDirection = new Vector3(0, 0, 1);

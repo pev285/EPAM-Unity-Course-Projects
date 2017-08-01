@@ -1,4 +1,5 @@
 using System.Text;
+using UnityEngine;
 
 public class ComplexSpell : AbstractSpell {
 
@@ -38,9 +39,9 @@ public class ComplexSpell : AbstractSpell {
 
     }
 
-    public override void Cast(UnityEngine.GameObject caster) {
+    public override void Cast(GameObject caster, GameObject casterCamera, GameObject targetingPoint) {
         foreach (AbstractSpellAction action in spellActions) {
-            action.Cast(gameObject);
+            action.Cast(caster, casterCamera, targetingPoint);
         }
     }
 }

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class SimpleDistantSpell : AbstractSpell{
 
     public override string Name {
@@ -18,8 +20,9 @@ public class SimpleDistantSpell : AbstractSpell{
         this.action = action;
     }
 
-    public override void Cast(UnityEngine.GameObject caster) {
-        action.Cast(caster);
+    public override void Cast(GameObject caster, GameObject casterCamera, GameObject targetingPoint) {
+
+        action.Cast(caster, casterCamera, targetingPoint);
     }
 }
 

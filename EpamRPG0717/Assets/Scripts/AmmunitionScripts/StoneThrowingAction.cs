@@ -26,7 +26,7 @@ public class StoneThrowingAction : AbstractSpellAction {
         this.stonePrefab = stonePrefab;
     }
 
-	public override void Cast(UnityEngine.GameObject caster) {
+	public override void Cast(GameObject caster, GameObject casterCamera, GameObject targetingPoint) {
 		GameObject newStone = GameObject.Instantiate(stonePrefab, caster.transform.position + caster.transform.rotation * relativeSpellCastPosition,
                 caster.transform.rotation, caster.transform);
 
