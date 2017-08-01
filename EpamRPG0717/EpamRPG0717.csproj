@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CBC2DC9D-2DDF-60FB-095C-D37421982932}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
+    <UnityVersion>5.6.2f1</UnityVersion>
+    <RootNamespace></RootNamespace>
+    <LangVersion>4</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_2;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_2;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="Boo.Lang" />
+    <Reference Include="UnityScript.Lang" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>Library\UnityAssemblies\UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VR">
+      <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Code\CameraController.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Code\RPGCharacterControllerFREE.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Code\RPGCharacterGUI.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\Bloom.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\ImageEffectBase.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\ImageEffects.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\PostEffectsBase.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\PostEffectsHelper.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\Quads.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\ScreenOverlay.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\ScreenSpaceAmbientObscurance.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\ScreenSpaceAmbientOcclusion.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Scripts\Triangles.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\Warrior Pack Bundle 1 FREE\Code\IKHands.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\Warrior Pack Bundle 1 FREE\Code\SmoothFollow.cs" />
+    <Compile Include="Assets\Imported Packages\_Characters\Warrior Pack Bundle 1 FREE\Code\WarriorAnimationDemoFREE.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\Characters\FirstPersonCharacter\Scripts\HeadBob.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\Characters\FirstPersonCharacter\Scripts\RigidbodyFirstPersonController.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\InputAxisScrollbar.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\Joystick.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\MobileControlRig.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\MobileInput.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\Utility\CurveControlledBob.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\Utility\FOVKick.cs" />
+    <Compile Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\Utility\LerpControlledBob.cs" />
+    <Compile Include="Assets\Scripts\-\InitScript.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\BowShotAction.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\ForceApplicationMover.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\HitOnRaycast.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\HitOnTriggerEnter.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\LimitedLifeTimeComponent.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\StoneThrowingAction.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\StraightLineMover.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\zzzAbstractProjectileLifeScript.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\zzzArrowMover.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\zzzArrowScript.cs" />
+    <Compile Include="Assets\Scripts\AmmunitionScripts\zzzStoneScript.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlayerController01.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlayerController02.cs" />
+    <Compile Include="Assets\Scripts\Game Components\ActiveSpells\MagnetoSpellAction.cs" />
+    <Compile Include="Assets\Scripts\Game Components\ActiveSpells\WindSpellAction.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Characteristics\Agility.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Characteristics\Dexterity.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Characteristics\Endurance.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Characteristics\Strength.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Characteristics\Sympathy.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Characteristics\Vitality.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Characteristics\Wisdom.cs" />
+    <Compile Include="Assets\Scripts\Game Components\IHasASpecification.cs" />
+    <Compile Include="Assets\Scripts\Game Components\INameAndDescription.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Tool Objects\Axe.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Tool Objects\Hook.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Tool Objects\Shovel.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Weapons\CloseCombat\BigStone.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Weapons\CloseCombat\Club.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Weapons\CloseCombat\DefaultWeapon.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Weapons\CloseCombat\SharpStick.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Weapons\Ranged\Bow.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Weapons\Ranged\Cone.cs" />
+    <Compile Include="Assets\Scripts\Game Components\PhisicalObjects\Weapons\Ranged\SmallStone.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Properties\Death.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Properties\Health.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Properties\Spirit.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Properties\Stamina.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Resistances\DisclosureResistance.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Resistances\PhisDamageResistance.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Resistances\TargetingResistance.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\Archery.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\Climb.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\ForestWarden.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\Hugging.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\Magic.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\Secrecy.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\Singing.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\UsingAxe.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\UsingHook.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Additional\UsingShovel.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Main\Hide.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Main\Hit.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Main\Jump.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Main\Run.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Main\Throw.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Skills\Main\Walk.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\AbstractSpell.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\AbstractSpellAction.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ComplexSpell.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\EquippedSpells.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\EquippedSpellsView.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ForestMagic\CallBushOnLegs.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ForestMagic\CallLivingTree.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ForestMagic\PoisonCloud.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ForestMagic\Transparency.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ForestWardenAbilities\BushGrowing.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ForestWardenAbilities\Camouflage.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ForestWardenAbilities\Thicket.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ForestWardenAbilities\Wrap.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\Hugs\Choke.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\Hugs\FreeHugs.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\HumanMagic\FireBall.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\ICastable.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\SimpleDistantSpell.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\Songs\FebSong.cs" />
+    <Compile Include="Assets\Scripts\Game Components\Spells\Songs\GamelnSong.cs" />
+    <Compile Include="Assets\Scripts\GlobalGameSettings.cs" />
+    <Compile Include="Assets\Scripts\GrantSkillCollider.cs" />
+    <Compile Include="Assets\Scripts\Inventory\AbstractInventoryItem.cs" />
+    <Compile Include="Assets\Scripts\Inventory\AbstractPhisicalInventoryItem.cs" />
+    <Compile Include="Assets\Scripts\Inventory\AbstractPhisicalObject.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Inventory\InventoryModel.cs" />
+    <Compile Include="Assets\Scripts\Inventory\InventorySlot.cs" />
+    <Compile Include="Assets\Scripts\Inventory\InventoryView.cs" />
+    <Compile Include="Assets\Scripts\Inventory\MultiplePhisicalInventoryItem.cs" />
+    <Compile Include="Assets\Scripts\Inventory\SinglePhisicalInventoryItem.cs" />
+    <Compile Include="Assets\Scripts\Inventory\SpellInventoryItem.cs" />
+    <Compile Include="Assets\Scripts\KeyboardCommandsLayout.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\AbstractCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\BowShotCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\CameraDefaultPositionCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\CastCurrentSpellCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\CastSpellCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\JumpCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\MouseWheelRotationCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\MoveSatelliteModeCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\NextSpellCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\PauseGameCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\PreviousSpellCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\RunForwardCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\ThereIsNoCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\TurnViewHorizontalCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\TurnViewVerticalCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\WalkBackCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\WalkLeftCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ControlCommands\WalkRightCommand.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\InputReader.cs" />
+    <Compile Include="Assets\Scripts\MVC\M\AbstractControllingModel.cs" />
+    <Compile Include="Assets\Scripts\MVC\M\CharacterModel.cs" />
+    <Compile Include="Assets\Scripts\MVC\M\SatelliteModel.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\Animators\AbstractVisualizer.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\Animators\DeathViz\AbstractDeathVisualizer.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\Animators\DeathViz\ShrinkingDeathVisualizer.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\Animators\DeathViz\YzeroDeathVisualizer.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\Animators\HitViz\AbstractProjectileHitVisualizer.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\Animators\HitViz\CrumbsVisualizer.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\Animators\SkillViz\MagnetoVisualizer.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\CharacterCameraRepresentation.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\CharacterRepresentation.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\GameStateView.cs" />
+    <Compile Include="Assets\Scripts\PatternSpecification\GameObjectSpecificationExtensionMethods.cs" />
+    <Compile Include="Assets\Scripts\PatternSpecification\IGameObjectSpecification.cs" />
+    <Compile Include="Assets\Scripts\PatternSpecification\ISpecification.cs" />
+    <Compile Include="Assets\Scripts\PatternSpecification\SkillSpecification.cs" />
+    <Compile Include="Assets\Scripts\PatternSpecification\SpecificationExtensionMethods.cs" />
+    <Compile Include="Assets\Scripts\PinguinsDemoScripts\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\PinguinsDemoScripts\PinguinController1.cs" />
+    <Compile Include="Assets\Scripts\PinguinsDemoScripts\PinguinController2.cs" />
+    <Compile Include="Assets\Scripts\PinguinsDemoScripts\PinguinController3.cs" />
+    <Compile Include="Assets\Scripts\PinguinsDemoScripts\PortalScript.cs" />
+    <Compile Include="Assets\Scripts\PinguinsDemoScripts\SwitchCameras.cs" />
+    <Compile Include="Assets\Scripts\Tools\Messaging.cs" />
+    <Compile Include="Assets\Scripts\Tools\Timer\DestroyTimer.cs" />
+    <Compile Include="Assets\Scripts\Tools\Timer\Timer.cs" />
+    <Compile Include="Assets\Scripts\Tools\Timer\TimerComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Imported Packages\GreenForest\Standard Assets\Skyboxes\_skybox info.txt" />
+    <None Include="Assets\Imported Packages\_Characters\CCHARACTERS\villarger_B_Boy\ReadMe [V 1.4]  02 06.txt" />
+    <None Include="Assets\Imported Packages\_Characters\Lenzo\readme.txt" />
+    <None Include="Assets\Imported Packages\_Characters\Medieval_Toon_Character\ReadMe.txt" />
+    <None Include="Assets\Imported Packages\_Characters\PPP\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
+    <None Include="Assets\Imported Packages\_Characters\PPP\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
+    <None Include="Assets\Imported Packages\_Characters\PPP\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
+    <None Include="Assets\Imported Packages\_Characters\PPP\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\BlendModesOverlay.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\CameraMotionBlur.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\CameraMotionBlurDX11.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ColorCorrection3DLut.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ColorCorrectionCurves.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ColorCorrectionCurvesSimple.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ColorCorrectionEffect.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ColorCorrectionSelective.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ContrastComposite.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ConvertDepth.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\CreaseApply.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\EdgeDetectNormals.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\FisheyeShader.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\GlobalFog.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\GrayscaleEffect.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\MotionBlur.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\MotionBlurClear.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\NoiseAndGrain.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\RadialBlur.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\SSAOShader.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ScreenSpaceAmbientObscurance.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\SepiaToneEffect.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\ShowAlphaChannel.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\SimpleClear.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\SunShaftsComposite.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\Tonemapper.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\TwirlEffect.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\VignettingShader.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\VortexEffect.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_Antialiasing\FXAA2.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_Antialiasing\FXAA3Console.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_Antialiasing\FXAAPreset2.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_Antialiasing\FXAAPreset3.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_Antialiasing\NFAA.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_Antialiasing\SSAA.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\MobileBloom.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_BloomAndFlares\VignetteShader.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_DepthOfField\Bokeh34.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_DepthOfField\DepthOfField34.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_DepthOfField\DepthOfFieldDX11.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_DepthOfField\DepthOfFieldScatter.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_DepthOfField\SeparableBlur.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
+    <None Include="Assets\Imported Packages\_Characters\RPG Character Animation Pack\Elements\ImageEffects\Shaders\frag_ao.cginc" />
+    <None Include="Assets\Imported Packages\_Constructions\BrokenVector\FreeLowPolyPack\readme.txt" />
+    <None Include="Assets\Imported Packages\_Constructions\Fortress\Shader\Diffuse.shader" />
+    <None Include="Assets\Imported Packages\_Constructions\Fortress\Shader\TwoSided.shader" />
+    <None Include="Assets\Imported Packages\_Nature\Nature Pack\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
+    <None Include="Assets\Shaders\BasicDiffuse.shader" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="GenerateTargetFrameworkMonikerAttribute" />
+</Project>

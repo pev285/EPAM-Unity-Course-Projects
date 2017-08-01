@@ -36,17 +36,26 @@ public class BowShotAction : AbstractSpellAction{
 //        targetingPoint.transform.position = new Vector3(1f,1f,1f);
 //        targetingPoint.transform.localScale = new Vector3(1f,1f,1f);
 
+        //*
         RaycastHit raycastHit;
         Debug.Log ("from: " + casterCamera.transform.position + " direction: " +  (targetingPoint.transform.position - casterCamera.transform.position));
         if (Physics.Raycast(targetingPoint.transform.position, targetingPoint.transform.position - casterCamera.transform.position, out raycastHit)) {
 
-//            Vector3 farPoint = raycastHit.point;
-            Vector3 farPoint = raycastHit.collider.transform.position;
+            Debug.Log("-== Raycast ==-");
+
+            Vector3 farPoint = raycastHit.point;
+            //Vector3 farPoint = raycastHit.collider.transform.position;
             Debug.Log("farPoint : " + farPoint);
 
             arrowRotation = Quaternion.FromToRotation(Vector3.forward, farPoint - arrowPosition);
             Debug.Log("arrowRotation: " + arrowRotation);
         } // If Raycast //
+        else
+        {
+            Debug.Log("-== Not Raycast ==-");
+        }
+
+        //*/
 
 //        arrowRotation = playerCamera.transform.rotation;
 //        Quaternion arrowRotation = caster.transform.rotation;   //Quaternion.AngleAxis(90, caster.transform.right);

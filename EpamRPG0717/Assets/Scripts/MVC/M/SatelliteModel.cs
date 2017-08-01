@@ -19,7 +19,7 @@ public class SatelliteModel : MonoBehaviour {
 
 
     [SerializeField]
-    private float mouseWheelSpeed = 3.0f;
+    private float mouseWheelSpeed = 10.0f;
     [SerializeField]
     private float vertRotationSpeed = 2f; //0.5f;
     [SerializeField]
