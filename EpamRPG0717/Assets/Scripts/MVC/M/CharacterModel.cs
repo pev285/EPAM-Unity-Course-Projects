@@ -59,6 +59,8 @@ public class CharacterModel : AbstractControllingModel {
 
     private EquippedSpells spells;
 
+    
+
     private void SubscribeOnKeyboardEvents() {
         gameModeKeyBinder = GameManager.Instance.GameModeKeyBinder;
 

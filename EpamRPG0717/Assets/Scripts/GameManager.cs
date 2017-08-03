@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -8,8 +9,8 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance = null;
 
     void Awake() {
-//        print("GameManager is awake");
-//
+        //        print("GameManager is awake");
+        //
         if (Instance == null) {
             Instance = this;
         } else {
@@ -56,13 +57,30 @@ public class GameManager : MonoBehaviour {
     private EquippedSpells spells;
 
 
-////////////////////////////////////////////////////////////////////////////
-// ###################################################################### //
-////////////////////////////////////////////////////////////////////////////
+    // ###################################################
+
+    [SerializeField]
+    private GameObject enemyObject;
+    private EquippedSpells enemySpells;
+
+
+    private EnemyController enemyController;
+
+    ////////////////////////////////////////////////////////////////////////////
+    // ###################################################################### //
+    ////////////////////////////////////////////////////////////////////////////
 
     public enum GameMode {
         GamePlay,
         Inventory
+    }
+
+
+    KeyBinder enemyKeyBinder;
+    public KeyBinder EnemyKeyBinder {
+        get {
+            return enemyKeyBinder;
+        }
     }
 
     KeyBinder gameModeKeyBinder;
@@ -99,7 +117,15 @@ public class GameManager : MonoBehaviour {
         GoToMode(GameMode.GamePlay);
 
         InitiateSpells();
+
+        ////////////////
+
+        InitiateEnemyKeyBinder();
+        InitiateEnemySpells();
+        enemyController = enemyObject.GetComponent<EnemyController>();
+
     }
+
 
     private void InitiateSpells() {
 
@@ -248,9 +274,6 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    void Update() {
-
-    }
 
     // Event Methods ////////////////////////////////////////////////////
 
@@ -265,5 +288,117 @@ public class GameManager : MonoBehaviour {
         ReinitiateSettingsForCurrentMode();
     }
 
+
+
+
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+
+
+
+
+
+    private void InitiateEnemySpells()
+    {
+        enemySpells = enemyObject.GetComponent<EquippedSpells>();
+
+        enemySpells.AddSpell(new SimpleDistantSpell(new StoneThrowingAction(stonePrefab)));
+        enemySpells.AddSpell(new SimpleDistantSpell(new BowShotAction(arrowPrefab)));
+        enemySpells.AddSpell(new SimpleDistantSpell(new WindSpellAction()));
+        enemySpells.AddSpell(new SimpleDistantSpell(new MagnetoSpellAction(magnetPrefab)));
+
+    }
+
+    private void InitiateEnemyKeyBinder()
+    {
+        enemyKeyBinder = enemyObject.AddComponent<KeyBinder>();
+
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.WalkingLeft));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.WalkingRight));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.WalkingBackward));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return enemyController.MovingForward(); }, KeyboardEventType.RunningForward));
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StartWalkLeft));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StartWalkRight));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StartWalkBackward));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return enemyController.MovingForward(); }, KeyboardEventType.StartRunForward));
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopWalkLeft));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopWalkRight));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopWalkBackward));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopRunForward));
+
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.PreviousSpell));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.NextSpell));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.PowerAttack));
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return enemyController.TurnLeft(); }, KeyboardEventType.StopHorizontalMouseMotion));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return enemyController.TurnRight(); }, KeyboardEventType.TurnRight));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.TurnLeft));
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.Jump));
+
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate {
+            return false;
+        }, KeyboardEventType.Walking));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate {
+            return false;
+        }, KeyboardEventType.NotWalking));
+
+
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopCharRotation));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.ResumeCharRotation));
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate {
+            return false;
+        }, KeyboardEventType.CameraDefaults));
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.CameraMoveNear));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.CameraMoveAway));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.CameraFixDistance));
+
+
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopVerticalMouseMotion));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.TurnUp));
+        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.TurnDown));
+
+
+    }
+
+    // ############################################################################ //
+    // $###################
+
+
+        
+
+    void Update()
+    {
+
+        if (enemyController.NearEnough(player))
+        {
+            Vector3 e2pDistance = enemyController.FindDirection(player);
+
+            
+        } else
+        {
+            enemyController.MoveDirection = 0;
+            enemyController.TurnDirection = 0;
+        }
+    }
 
 }

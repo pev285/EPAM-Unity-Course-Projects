@@ -35,13 +35,13 @@ public class CharacterRepresentation : MonoBehaviour {
 		model = character.GetComponent<CharacterModel>();
 
         rgBody = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
 
 
 
         gameModeKeyBinder = GameManager.Instance.GameModeKeyBinder;
 
-        subscribeAnimationEvent();
+      //  subscribeAnimationEvent();
 
         subscribeMovementEvents();
 	}
@@ -50,6 +50,7 @@ public class CharacterRepresentation : MonoBehaviour {
 
     }
 
+    /*
     private void subscribeAnimationEvent() {
 
         gameModeKeyBinder.StartListening(KeyboardEventType.StartRunForward, delegate  {
@@ -76,7 +77,7 @@ public class CharacterRepresentation : MonoBehaviour {
 
 
     }
-
+    */
 	
 	// Update is called once per frame
 	void FixedUpdate () {
