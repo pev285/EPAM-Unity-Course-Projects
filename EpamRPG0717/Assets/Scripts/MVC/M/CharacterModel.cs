@@ -50,6 +50,60 @@ public class CharacterModel : AbstractControllingModel {
     private float jumpUpForce = 200f;
     private float jumpUpVelocity = 5f; // если использовать прыжок по velocity, а не по силе
 
+    [SerializeField]
+    private bool turnableAround = true;
+
+//////////////////////////////////////////////////////
+
+    private KeyBinder gameModeKeyBinder;
+
+    private EquippedSpells spells;
+
+    private void SubscribeOnKeyboardEvents() {
+        gameModeKeyBinder = GameManager.Instance.GameModeKeyBinder;
+
+        gameModeKeyBinder.StartListening(KeyboardEventType.StartRunForward, delegate  {
+            forwardVelocity = runSpeed;
+        });
+        gameModeKeyBinder.StartListening(KeyboardEventType.StopRunForward, delegate  {
+            forwardVelocity = 0;
+        });
+
+        gameModeKeyBinder.StartListening(KeyboardEventType.StartWalkBackward, delegate  {
+            forwardVelocity = -walkSpeed;
+        });
+        gameModeKeyBinder.StartListening(KeyboardEventType.StopWalkBackward, delegate  {
+            forwardVelocity = 0;
+        });
+
+        gameModeKeyBinder.StartListening(KeyboardEventType.Jump, delegate  {
+            if(IsGrounded) {
+                jumping = true;
+            }
+        });
+        gameModeKeyBinder.StartListening(KeyboardEventType.TurnRight, delegate  {
+            if(turnableAround) {
+                horizontalRotationAmount = horizRotationSpeed * Input.GetAxis("Mouse X");
+            }
+        });
+        gameModeKeyBinder.StartListening(KeyboardEventType.TurnLeft, delegate  {
+            if (turnableAround) {
+                horizontalRotationAmount = horizRotationSpeed * Input.GetAxis("Mouse X");
+            }
+        });
+        gameModeKeyBinder.StartListening(KeyboardEventType.StopHorizontalMouseMotion, delegate  {
+            horizontalRotationAmount = 0;
+        });
+
+        gameModeKeyBinder.StartListening(KeyboardEventType.StopCharRotation, delegate  {
+            turnableAround = false;
+            horizontalRotationAmount = 0;
+        });
+        gameModeKeyBinder.StartListening(KeyboardEventType.ResumeCharRotation, delegate  {
+            turnableAround = true;
+        });
+
+    }
 
 ///////////////////////////////////////////////////////////
 
@@ -142,13 +196,13 @@ public class CharacterModel : AbstractControllingModel {
 
     public override float GetForwardVelocity() {
         float tmp = forwardVelocity; // * Time.deltaTime;
-        forwardVelocity = 0;
+//        forwardVelocity = 0;
         return tmp;
     }
 
     public override float GetSidewardVelocity() {
         float tmp = sidewardVelocity; // * Time.deltaTime;
-        sidewardVelocity = 0;
+//        sidewardVelocity = 0;
         return tmp;
     }
 
@@ -172,8 +226,13 @@ public class CharacterModel : AbstractControllingModel {
 
 	// Use this for initialization
 	void Start () {
+
 		//position = gameObject.transform.position;
         lastTimeY = gameObject.transform.position.y;
+
+        spells = GetComponent<EquippedSpells>();
+
+        SubscribeOnKeyboardEvents();
 	}
 	
 	// Update is called once per frame

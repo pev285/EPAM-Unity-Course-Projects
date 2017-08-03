@@ -15,7 +15,7 @@ public class BowShotAction : AbstractSpellAction{
     }
 
     [SerializeField]
-    private Vector3 relativeSpellCastPosition = new Vector3(0, 1.5f, 1.0f);
+    private Vector3 relativeSpellCastPosition = new Vector3(0, 2f, 1.5f);
 
     private GameObject arrowPrefab;
 
@@ -47,7 +47,9 @@ public class BowShotAction : AbstractSpellAction{
             //Vector3 farPoint = raycastHit.collider.transform.position;
             Debug.Log("farPoint : " + farPoint);
 
+            Debug.Log("asd" + caster.transform.right + "asdf" + casterCamera.transform.right);
             arrowRotation = Quaternion.FromToRotation(Vector3.forward, farPoint - arrowPosition);
+            arrowRotation = Quaternion.LookRotation(farPoint - arrowPosition, casterCamera.transform.up);
             Debug.Log("arrowRotation: " + arrowRotation);
         } // If Raycast //
         else

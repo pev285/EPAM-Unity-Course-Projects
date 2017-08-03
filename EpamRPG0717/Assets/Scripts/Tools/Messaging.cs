@@ -11,10 +11,10 @@ public class Messaging {
 
     static Messaging() {
 
-        topText = GameObject.Find("MessageBoard/TopCenterText").GetComponent<Text>();
-        centerText = GameObject.Find("MessageBoard/CenterCenterText").GetComponent<Text>();
-        bottomText = GameObject.Find("MessageBoard/BottomCenterText").GetComponent<Text>();
-        techInfoText = GameObject.Find("MessageBoard/TechInfoText").GetComponent<Text>();
+        topText = GameObject.Find("MessageBoardCanvas/TopCenterText").GetComponent<Text>();
+        centerText = GameObject.Find("MessageBoardCanvas/CenterCenterText").GetComponent<Text>();
+        bottomText = GameObject.Find("MessageBoardCanvas/BottomCenterText").GetComponent<Text>();
+        techInfoText = GameObject.Find("MessageBoardCanvas/TechInfoText").GetComponent<Text>();
     }
 
     public static void SetTopTextFor(float seconds, string str) {
