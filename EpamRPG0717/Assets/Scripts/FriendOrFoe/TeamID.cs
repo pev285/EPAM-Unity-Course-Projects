@@ -1,5 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TeamID : MonoBehaviour {
@@ -8,5 +6,4 @@ public class TeamID : MonoBehaviour {
 
     [SerializeField]
     private Teams thisTeam = Teams.A;
-
 }

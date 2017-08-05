@@ -34,7 +34,7 @@ public class SatelliteModel : MonoBehaviour {
 
 
 
-    private KeyBinder gameModeKeyBinder;
+    private Dispatcher gameModeKeyBinder;
 
     [SerializeField]
     private bool relativePositionChangeMode = false;
@@ -115,32 +115,32 @@ public class SatelliteModel : MonoBehaviour {
     private void SubscribeOnKeyboardEvents() {
         gameModeKeyBinder = GameManager.Instance.GameModeKeyBinder;
 
-        gameModeKeyBinder.StartListening(KeyboardEventType.StopCharRotation, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.StopCharRotation, delegate  {
             relativePositionChangeMode = true;
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.ResumeCharRotation, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.ResumeCharRotation, delegate  {
             relativePositionChangeMode = false;
         });
 
 
-        gameModeKeyBinder.StartListening(KeyboardEventType.TurnRight, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.TurnRight, delegate  {
             TurnHorizontal(Input.GetAxis("Mouse X"));
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.TurnLeft, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.TurnLeft, delegate  {
             TurnHorizontal(Input.GetAxis("Mouse X"));
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.TurnUp, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.TurnUp, delegate  {
             TurnVertical(Input.GetAxis("Mouse Y"));
 //            satelliteVertDeviationAngle -= vertRotationSpeed * Input.GetAxis("Mouse Y");
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.TurnDown, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.TurnDown, delegate  {
             TurnVertical(Input.GetAxis("Mouse Y"));
         });
 
-        gameModeKeyBinder.StartListening(KeyboardEventType.CameraMoveNear, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.CameraMoveNear, delegate  {
             ChangeApproach(Input.GetAxis("Mouse ScrollWheel"));
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.CameraMoveAway, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.CameraMoveAway, delegate  {
             ChangeApproach(Input.GetAxis("Mouse ScrollWheel"));
         });
 
@@ -149,7 +149,7 @@ public class SatelliteModel : MonoBehaviour {
 //        StopVerticalMouseMotion,
 
 
-        gameModeKeyBinder.StartListening(KeyboardEventType.CameraDefaults, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.CameraDefaults, delegate  {
             SetSatelliteDefaults();
         });
 

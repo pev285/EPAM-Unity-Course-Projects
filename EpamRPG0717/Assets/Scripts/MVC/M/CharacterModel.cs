@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterModel : AbstractControllingModel {
+public class CharacterModel : AbstractCharacterControllingModel {
 
 
 //    private GameObject attackingPoint;
@@ -55,7 +55,7 @@ public class CharacterModel : AbstractControllingModel {
 
 //////////////////////////////////////////////////////
 
-    private KeyBinder gameModeKeyBinder;
+    private Dispatcher gameModeKeyBinder;
 
     private EquippedSpells spells;
 
@@ -64,44 +64,44 @@ public class CharacterModel : AbstractControllingModel {
     private void SubscribeOnKeyboardEvents() {
         gameModeKeyBinder = GameManager.Instance.GameModeKeyBinder;
 
-        gameModeKeyBinder.StartListening(KeyboardEventType.StartRunForward, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.StartRunForward, delegate  {
             forwardVelocity = runSpeed;
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.StopRunForward, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.StopRunForward, delegate  {
             forwardVelocity = 0;
         });
 
-        gameModeKeyBinder.StartListening(KeyboardEventType.StartWalkBackward, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.StartWalkBackward, delegate  {
             forwardVelocity = -walkSpeed;
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.StopWalkBackward, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.StopWalkBackward, delegate  {
             forwardVelocity = 0;
         });
 
-        gameModeKeyBinder.StartListening(KeyboardEventType.Jump, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.Jump, delegate  {
             if(IsGrounded) {
                 jumping = true;
             }
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.TurnRight, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.TurnRight, delegate  {
             if(turnableAround) {
                 horizontalRotationAmount = horizRotationSpeed * Input.GetAxis("Mouse X");
             }
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.TurnLeft, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.TurnLeft, delegate  {
             if (turnableAround) {
                 horizontalRotationAmount = horizRotationSpeed * Input.GetAxis("Mouse X");
             }
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.StopHorizontalMouseMotion, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.StopHorizontalMouseMotion, delegate  {
             horizontalRotationAmount = 0;
         });
 
-        gameModeKeyBinder.StartListening(KeyboardEventType.StopCharRotation, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.StopCharRotation, delegate  {
             turnableAround = false;
             horizontalRotationAmount = 0;
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.ResumeCharRotation, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.ResumeCharRotation, delegate  {
             turnableAround = true;
         });
 

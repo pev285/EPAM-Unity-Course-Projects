@@ -76,21 +76,21 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    KeyBinder enemyKeyBinder;
-    public KeyBinder EnemyKeyBinder {
+    Dispatcher enemyKeyBinder;
+    public Dispatcher EnemyKeyBinder {
         get {
             return enemyKeyBinder;
         }
     }
 
-    KeyBinder gameModeKeyBinder;
-    public KeyBinder GameModeKeyBinder {
+    Dispatcher gameModeKeyBinder;
+    public Dispatcher GameModeKeyBinder {
         get {
             return gameModeKeyBinder;
         }
     }
-    KeyBinder inventoryModeKeyBinder;
-    KeyBinder InventoryModeKeyBinder {
+    Dispatcher inventoryModeKeyBinder;
+    Dispatcher InventoryModeKeyBinder {
         get {
             return inventoryModeKeyBinder;
         }
@@ -141,27 +141,27 @@ public class GameManager : MonoBehaviour {
     }
 
     private void SubscribeOnKeyboardEvents() {
-        inventoryModeKeyBinder.StartListening(KeyboardEventType.Pause, ChangeGameMode);
-        gameModeKeyBinder.StartListening(KeyboardEventType.Pause, ChangeGameMode);
+        inventoryModeKeyBinder.StartListening(DispatcherEventType.Pause, ChangeGameMode);
+        gameModeKeyBinder.StartListening(DispatcherEventType.Pause, ChangeGameMode);
 
         // PlayerModel??? //
 
-        gameModeKeyBinder.StartListening(KeyboardEventType.NextSpell, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.NextSpell, delegate  {
             spells.ShiftForward();
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.PreviousSpell, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.PreviousSpell, delegate  {
             spells.ShiftBackward();
         });
-        gameModeKeyBinder.StartListening(KeyboardEventType.PowerAttack, delegate  {
+        gameModeKeyBinder.StartListening(DispatcherEventType.PowerAttack, delegate  {
             spells.GetCurrentSpell().Cast(player, playerCamera, targetingPoint);
         });
 
     }
 
     private void InitiateGameModeKeyBinderEvents() {
-        gameModeKeyBinder = gameObject.AddComponent<KeyBinder>();
+        gameModeKeyBinder = gameObject.AddComponent<Dispatcher>();
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return Input.GetKeyDown(KeyCode.P); }, KeyboardEventType.Pause));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return Input.GetKeyDown(KeyCode.P); }, DispatcherEventType.Pause));
 
 
 
@@ -172,52 +172,52 @@ public class GameManager : MonoBehaviour {
 
 
         /////
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyDown(KeyCode.LeftArrow); }, KeyboardEventType.PreviousSpell));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyDown(KeyCode.RightArrow); }, KeyboardEventType.NextSpell));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyDown(KeyCode.Mouse0); }, KeyboardEventType.PowerAttack));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.LeftArrow); }, DispatcherEventType.PreviousSpell));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.RightArrow); }, DispatcherEventType.NextSpell));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.Mouse0); }, DispatcherEventType.PowerAttack));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  {
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  {
             return (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S)) || Input.GetKey(KeyCode.D);
-        }, KeyboardEventType.Walking));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  {
+        }, DispatcherEventType.Walking));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  {
             return (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S)) && !Input.GetKey(KeyCode.D);
-        }, KeyboardEventType.NotWalking));
+        }, DispatcherEventType.NotWalking));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKey(KeyCode.A); }, KeyboardEventType.WalkingLeft));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKey(KeyCode.D); }, KeyboardEventType.WalkingRight));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKey(KeyCode.S); }, KeyboardEventType.WalkingBackward));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKey(KeyCode.W); }, KeyboardEventType.RunningForward));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKey(KeyCode.A); }, DispatcherEventType.WalkingLeft));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKey(KeyCode.D); }, DispatcherEventType.WalkingRight));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKey(KeyCode.S); }, DispatcherEventType.WalkingBackward));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKey(KeyCode.W); }, DispatcherEventType.RunningForward));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyDown(KeyCode.A); }, KeyboardEventType.StartWalkLeft));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyDown(KeyCode.D); }, KeyboardEventType.StartWalkRight));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyDown(KeyCode.S); }, KeyboardEventType.StartWalkBackward));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyDown(KeyCode.W); }, KeyboardEventType.StartRunForward));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.A); }, DispatcherEventType.StartWalkLeft));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.D); }, DispatcherEventType.StartWalkRight));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.S); }, DispatcherEventType.StartWalkBackward));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.W); }, DispatcherEventType.StartRunForward));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyUp(KeyCode.A); }, KeyboardEventType.StopWalkLeft));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyUp(KeyCode.D); }, KeyboardEventType.StopWalkRight));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyUp(KeyCode.S); }, KeyboardEventType.StopWalkBackward));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyUp(KeyCode.W); }, KeyboardEventType.StopRunForward));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.A); }, DispatcherEventType.StopWalkLeft));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.D); }, DispatcherEventType.StopWalkRight));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.S); }, DispatcherEventType.StopWalkBackward));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.W); }, DispatcherEventType.StopRunForward));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyDown(KeyCode.Space); }, KeyboardEventType.Jump));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.Space); }, DispatcherEventType.Jump));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyDown(KeyCode.RightControl); }, KeyboardEventType.StopCharRotation));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetKeyUp(KeyCode.RightControl); }, KeyboardEventType.ResumeCharRotation));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.RightControl); }, DispatcherEventType.StopCharRotation));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.RightControl); }, DispatcherEventType.ResumeCharRotation));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  {
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  {
             return Input.GetKeyDown(KeyCode.Mouse2) || Input.GetKeyDown(KeyCode.Keypad5);
-        }, KeyboardEventType.CameraDefaults));
+        }, DispatcherEventType.CameraDefaults));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetAxis("Mouse ScrollWheel") > 0; }, KeyboardEventType.CameraMoveNear));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetAxis("Mouse ScrollWheel") < 0; }, KeyboardEventType.CameraMoveAway));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetAxis("Mouse ScrollWheel") == 0; }, KeyboardEventType.CameraFixDistance));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse ScrollWheel") > 0; }, DispatcherEventType.CameraMoveNear));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse ScrollWheel") < 0; }, DispatcherEventType.CameraMoveAway));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse ScrollWheel") == 0; }, DispatcherEventType.CameraFixDistance));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetAxis("Mouse X") == 0; }, KeyboardEventType.StopHorizontalMouseMotion));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetAxis("Mouse X") > 0; }, KeyboardEventType.TurnRight));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetAxis("Mouse X") < 0; }, KeyboardEventType.TurnLeft));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse X") == 0; }, DispatcherEventType.StopHorizontalMouseMotion));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse X") > 0; }, DispatcherEventType.TurnRight));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse X") < 0; }, DispatcherEventType.TurnLeft));
 
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetAxis("Mouse Y") == 0; }, KeyboardEventType.StopVerticalMouseMotion));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetAxis("Mouse Y") > 0; }, KeyboardEventType.TurnUp));
-        gameModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate  { return Input.GetAxis("Mouse Y") < 0; }, KeyboardEventType.TurnDown));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse Y") == 0; }, DispatcherEventType.StopVerticalMouseMotion));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse Y") > 0; }, DispatcherEventType.TurnUp));
+        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse Y") < 0; }, DispatcherEventType.TurnDown));
 
 
 //
@@ -231,9 +231,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void InitiateInventoryModeKeyBinderEvents() {
-        inventoryModeKeyBinder = gameObject.AddComponent<KeyBinder>();
+        inventoryModeKeyBinder = gameObject.AddComponent<Dispatcher>();
 
-        inventoryModeKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return Input.GetKeyDown(KeyCode.P); }, KeyboardEventType.Pause));
+        inventoryModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return Input.GetKeyDown(KeyCode.P); }, DispatcherEventType.Pause));
     }
 
     private void SelectKeyBinder() {
@@ -322,60 +322,60 @@ public class GameManager : MonoBehaviour {
 
     private void InitiateEnemyKeyBinder()
     {
-        enemyKeyBinder = enemyObject.AddComponent<KeyBinder>();
+        enemyKeyBinder = enemyObject.AddComponent<Dispatcher>();
 
 
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.WalkingLeft));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.WalkingRight));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.WalkingBackward));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return enemyController.MovingForward(); }, KeyboardEventType.RunningForward));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.WalkingLeft));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.WalkingRight));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.WalkingBackward));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return enemyController.MovingForward(); }, DispatcherEventType.RunningForward));
 
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StartWalkLeft));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StartWalkRight));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StartWalkBackward));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return enemyController.MovingForward(); }, KeyboardEventType.StartRunForward));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StartWalkLeft));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StartWalkRight));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StartWalkBackward));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return enemyController.MovingForward(); }, DispatcherEventType.StartRunForward));
 
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopWalkLeft));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopWalkRight));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopWalkBackward));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopRunForward));
-
-
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.PreviousSpell));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.NextSpell));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.PowerAttack));
-
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return enemyController.TurnLeft(); }, KeyboardEventType.StopHorizontalMouseMotion));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return enemyController.TurnRight(); }, KeyboardEventType.TurnRight));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.TurnLeft));
-
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.Jump));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopWalkLeft));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopWalkRight));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopWalkBackward));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopRunForward));
 
 
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate {
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.PreviousSpell));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.NextSpell));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.PowerAttack));
+
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return enemyController.TurnLeft(); }, DispatcherEventType.StopHorizontalMouseMotion));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return enemyController.TurnRight(); }, DispatcherEventType.TurnRight));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.TurnLeft));
+
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.Jump));
+
+
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate {
             return false;
-        }, KeyboardEventType.Walking));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate {
+        }, DispatcherEventType.Walking));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate {
             return false;
-        }, KeyboardEventType.NotWalking));
+        }, DispatcherEventType.NotWalking));
 
 
 
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopCharRotation));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.ResumeCharRotation));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopCharRotation));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.ResumeCharRotation));
 
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate {
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate {
             return false;
-        }, KeyboardEventType.CameraDefaults));
+        }, DispatcherEventType.CameraDefaults));
 
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.CameraMoveNear));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.CameraMoveAway));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.CameraFixDistance));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.CameraMoveNear));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.CameraMoveAway));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.CameraFixDistance));
 
 
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.StopVerticalMouseMotion));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.TurnUp));
-        enemyKeyBinder.AddKeyEvent(new KeyboardDependentEvent(delegate { return false; }, KeyboardEventType.TurnDown));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopVerticalMouseMotion));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.TurnUp));
+        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.TurnDown));
 
 
     }

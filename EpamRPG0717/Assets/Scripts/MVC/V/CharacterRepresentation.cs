@@ -22,7 +22,7 @@ public class CharacterRepresentation : MonoBehaviour {
 //    private KeyBinder gameModeKeyBinder = GameManager.GameModeKeyBinder;
 //
 
-    private KeyBinder gameModeKeyBinder;// = GameManager.Instance.GameModeKeyBinder;
+    private Dispatcher gameModeKeyBinder;// = GameManager.Instance.GameModeKeyBinder;
 
 
 /////////////////////////////////////////////////////////////////////////////////
