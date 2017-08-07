@@ -26,7 +26,7 @@ public class WindSpellAction : AbstractSpellAction {
 
     private float upwardsModifier = 3.0F;
 
-    public override void Cast(GameObject caster, GameObject casterCamera, GameObject targetingPoint) {
+    public override void Cast(GameObject caster, Quaternion castRotation) {
 
         Vector3 explosionPos = caster.transform.position + caster.transform.forward * spellCastDistance;
         Collider[] colliders = Physics.OverlapSphere(explosionPos, attackRadius);

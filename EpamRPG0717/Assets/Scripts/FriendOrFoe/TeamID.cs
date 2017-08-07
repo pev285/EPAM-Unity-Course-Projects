@@ -6,4 +6,12 @@ public class TeamID : MonoBehaviour {
 
     [SerializeField]
     private Teams thisTeam = Teams.A;
+
+    public Teams ThisTeam
+    {
+        get
+        {
+            return thisTeam;
+        }
+    }
 }

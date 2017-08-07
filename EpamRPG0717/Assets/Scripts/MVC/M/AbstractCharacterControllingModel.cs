@@ -15,6 +15,16 @@ public abstract class AbstractCharacterControllingModel : MonoBehaviour {
 
     public abstract void MoveLeft();
 
+
+    public abstract void StopMoveForward();
+
+    public abstract void StopMoveBackward();
+
+    public abstract void StopMoveRight();
+
+    public abstract void StopMoveLeft();
+
+
     public abstract void Jump();
 
     public abstract void SpecialAttack();
@@ -26,6 +36,9 @@ public abstract class AbstractCharacterControllingModel : MonoBehaviour {
 
 
 
+
+
+
     /// Getters /////////////////////////////////////////////
 
 
@@ -33,6 +46,8 @@ public abstract class AbstractCharacterControllingModel : MonoBehaviour {
     public abstract bool IsGrounded { get; }
 
     public abstract float GetJumpForce();
+
+    public abstract bool IsTargeting{ get; }
 
     public abstract bool IsSpecialAttacking { get; }
 

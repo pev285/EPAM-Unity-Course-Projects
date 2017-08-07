@@ -6,6 +6,6 @@ public abstract class AbstractSpellAction : ICastable, INameAndDescription {
 
     public abstract string Name { get; }
 
-    public abstract void Cast(GameObject caster, GameObject casterCamera, GameObject targetingPoint);
+    public abstract void Cast(GameObject caster, Quaternion castRotation);
 
 }

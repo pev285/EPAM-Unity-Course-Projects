@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class AbstractSpell : MonoBehaviour, ICastable, INameAndDescription{
 
-    public abstract void Cast (GameObject caster, GameObject casterCamera, GameObject targetingPoint);
+    public abstract void Cast (GameObject caster, Quaternion castRotation);
 
     public abstract string Description { get; }
 

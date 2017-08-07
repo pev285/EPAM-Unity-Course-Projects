@@ -33,7 +33,7 @@ public class MagnetoSpellAction : AbstractSpellAction {
 
     }
 
-    public override void Cast(GameObject caster, GameObject casterCamera, GameObject targetingPoint) {
+    public override void Cast(GameObject caster, Quaternion castRotation) {
 
         Vector3 explosionPos = caster.transform.position + caster.transform.forward * spellCastDistance;
 

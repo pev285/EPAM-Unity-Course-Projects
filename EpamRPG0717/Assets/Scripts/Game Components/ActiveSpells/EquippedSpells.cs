@@ -8,7 +8,6 @@ public class EquippedSpells : MonoBehaviour {
 
     public void AddSpell(AbstractSpell spell) {
         spells.Add(spell);
-//        print("spell added, count=" + spells.Count);
     }
 
     public void RemoveSpellAt(int index) {
@@ -24,8 +23,6 @@ public class EquippedSpells : MonoBehaviour {
     }
 
     public AbstractSpell GetCurrentSpell() {
-//        AbstractSpell spell = GetSpellAt(currentSpellIndex);
-//        print("GetCurrentSpell: currentIndex = " + currentSpellIndex + ", ListLen = " + spells.Count + ", spell = " + spell);
         return  GetSpellAt(currentSpellIndex);
     }
 

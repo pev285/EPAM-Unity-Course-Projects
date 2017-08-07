@@ -3,9 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class zzzzEnemyModel : AbstractCharacterControllingModel {
+    public override void StopMoveForward() {
+    }
+
+    public override void StopMoveBackward() {
+    }
+
+    public override void StopMoveLeft() {
+    }
+
+    public override void StopMoveRight() {
+    }
+
+    public override bool IsTargeting {
+        get {
+            return false;
+        }
+    }
 
 
-    //    private GameObject attackingPoint;
+
+//    private GameObject attackingPoint;
 
     // GoundCheck //
     [SerializeField]
@@ -63,7 +81,7 @@ public class zzzzEnemyModel : AbstractCharacterControllingModel {
 
     private void SubscribeOnKeyboardEvents()
     {
-        gameModeKeyBinder = GameManager.Instance.EnemyKeyBinder;
+//        gameModeKeyBinder = GameManager.Instance.EnemyKeyBinder;
 
         gameModeKeyBinder.StartListening(DispatcherEventType.StartRunForward, delegate {
             print("fadkfja;skjdf;aljd;flkajsd;lkfj");

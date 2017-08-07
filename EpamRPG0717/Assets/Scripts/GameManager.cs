@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -21,50 +21,54 @@ public class GameManager : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
 
+
+        ////////////////////////////
+
         InitGame();
     }
+
+
+    /////////////////////////////////////////////////////////////////////
+    
 
     /////////////////////////////
     // GameObjects and Prefabs //
     /////////////////////////////
 
-    [SerializeField]
+//    GameObject inventoryCanvas;
     Canvas inventoryCanvas;
 
 
-    [SerializeField]
-    private GameObject player;
+    private GameObject player = null;
 
-    [SerializeField]
-    private GameObject playerCamera;
+    private GameObject playerCamera = null;
 
-    [SerializeField]
-    private GameObject targetingPoint;
-
-    private CharacterModel characterModel;
-    private SatelliteModel cameraModel;
-
+    private GameObject targetingPoint = null;
+    private GameObject characterFace = null;
 
 
     [SerializeField]
-    private GameObject stonePrefab;
+    private GameObject cameraInitiator;
     [SerializeField]
-    private GameObject arrowPrefab;
+    private GameObject stoneInitiator;
     [SerializeField]
-    private GameObject magnetPrefab;
-
-
-    private EquippedSpells spells;
-
-
-    // ###################################################
-
+    private GameObject arrowInitiator;
     [SerializeField]
-    private GameObject enemyObject;
-    private EquippedSpells enemySpells;
+    private GameObject magnetInitiator;
 
 
-    private EnemyController enemyController;
+    private GameObject playerCameraPrefab = null;
+    private GameObject stonePrefab = null;
+    private GameObject arrowPrefab = null;
+    private GameObject magnetPrefab = null;
+
+
+    private ConsoleReaderController consoleReader;
+
+    private ControllerEventSystem gameModeConsoleEventSystem;
+    private ControllerEventSystem pauseModeConsoleEventSystem;
+
+    private List<AbstractAIController> enemyAIsList = new List<AbstractAIController>();
 
     ////////////////////////////////////////////////////////////////////////////
     // ###################################################################### //
@@ -76,177 +80,94 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    Dispatcher enemyKeyBinder;
-    public Dispatcher EnemyKeyBinder {
-        get {
-            return enemyKeyBinder;
-        }
-    }
 
-    Dispatcher gameModeKeyBinder;
-    public Dispatcher GameModeKeyBinder {
-        get {
-            return gameModeKeyBinder;
-        }
-    }
-    Dispatcher inventoryModeKeyBinder;
-    Dispatcher InventoryModeKeyBinder {
-        get {
-            return inventoryModeKeyBinder;
-        }
-    }
-//    KeyBinder currentKeyBinder;
-
-    GameMode gameMode = GameMode.Inventory;
+    GameMode currentMode = GameMode.GamePlay;
     public GameMode Mode {
         get {
-            return gameMode;
+            return currentMode;
         }
+    }
+
+    public Vector3 GetCharacterFacePosition() {
+        return characterFace.transform.position;
+    }
+
+    public Quaternion GetCharacterFaceRotation() {
+        return characterFace.transform.rotation;
+    }
+
+    public Quaternion GetPlayerCameraRotation() {
+        return playerCamera.transform.rotation;
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     Starting initiation * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      ** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     void InitGame() {
+        FindGameObjectsAndPrefabs();
 
-        InitiateGameModeKeyBinderEvents();
-        InitiateInventoryModeKeyBinderEvents();
-        SubscribeOnKeyboardEvents();
-
+        consoleReader = GetComponent<ConsoleReaderController>();
+        gameModeConsoleEventSystem = new ControllerEventSystem();
+        pauseModeConsoleEventSystem = new ControllerEventSystem();
+        SubscribeOnConsoleEvents();
 
         GoToMode(GameMode.GamePlay);
-
-        InitiateSpells();
-
-        ////////////////
-
-        InitiateEnemyKeyBinder();
-        InitiateEnemySpells();
-        enemyController = enemyObject.GetComponent<EnemyController>();
-
     }
 
-
-    private void InitiateSpells() {
-
-        // PlayerModel??? //
-        spells = player.GetComponent<EquippedSpells>();
-
-        spells.AddSpell(new SimpleDistantSpell(new BowShotAction(arrowPrefab)));
-        spells.AddSpell(new SimpleDistantSpell(new StoneThrowingAction(stonePrefab)));
-        spells.AddSpell(new SimpleDistantSpell(new WindSpellAction()));
-        spells.AddSpell(new SimpleDistantSpell(new MagnetoSpellAction(magnetPrefab)));
+    private void FindGameObjectsAndPrefabs() {
+        inventoryCanvas = GameObject.Find("InventoryCanvas").GetComponent<Canvas>();
+        if (inventoryCanvas == null) {
+            print("Inventory Canvas is null");
+        }
 
 
-    }
+        stonePrefab = stoneInitiator;
+        arrowPrefab = arrowInitiator;
+        magnetPrefab = magnetInitiator;
+        playerCameraPrefab = cameraInitiator;
 
-    private void SubscribeOnKeyboardEvents() {
-        inventoryModeKeyBinder.StartListening(DispatcherEventType.Pause, ChangeGameMode);
-        gameModeKeyBinder.StartListening(DispatcherEventType.Pause, ChangeGameMode);
-
-        // PlayerModel??? //
-
-        gameModeKeyBinder.StartListening(DispatcherEventType.NextSpell, delegate  {
-            spells.ShiftForward();
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.PreviousSpell, delegate  {
-            spells.ShiftBackward();
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.PowerAttack, delegate  {
-            spells.GetCurrentSpell().Cast(player, playerCamera, targetingPoint);
-        });
-
-    }
-
-    private void InitiateGameModeKeyBinderEvents() {
-        gameModeKeyBinder = gameObject.AddComponent<Dispatcher>();
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return Input.GetKeyDown(KeyCode.P); }, DispatcherEventType.Pause));
-
-
-
-
-//        ThrowStone,
-//        FireBow,
-//        LowRangeWeaponHit,
-
-
-        /////
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.LeftArrow); }, DispatcherEventType.PreviousSpell));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.RightArrow); }, DispatcherEventType.NextSpell));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.Mouse0); }, DispatcherEventType.PowerAttack));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  {
-            return (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S)) || Input.GetKey(KeyCode.D);
-        }, DispatcherEventType.Walking));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  {
-            return (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S)) && !Input.GetKey(KeyCode.D);
-        }, DispatcherEventType.NotWalking));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKey(KeyCode.A); }, DispatcherEventType.WalkingLeft));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKey(KeyCode.D); }, DispatcherEventType.WalkingRight));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKey(KeyCode.S); }, DispatcherEventType.WalkingBackward));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKey(KeyCode.W); }, DispatcherEventType.RunningForward));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.A); }, DispatcherEventType.StartWalkLeft));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.D); }, DispatcherEventType.StartWalkRight));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.S); }, DispatcherEventType.StartWalkBackward));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.W); }, DispatcherEventType.StartRunForward));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.A); }, DispatcherEventType.StopWalkLeft));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.D); }, DispatcherEventType.StopWalkRight));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.S); }, DispatcherEventType.StopWalkBackward));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.W); }, DispatcherEventType.StopRunForward));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.Space); }, DispatcherEventType.Jump));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyDown(KeyCode.RightControl); }, DispatcherEventType.StopCharRotation));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetKeyUp(KeyCode.RightControl); }, DispatcherEventType.ResumeCharRotation));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  {
-            return Input.GetKeyDown(KeyCode.Mouse2) || Input.GetKeyDown(KeyCode.Keypad5);
-        }, DispatcherEventType.CameraDefaults));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse ScrollWheel") > 0; }, DispatcherEventType.CameraMoveNear));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse ScrollWheel") < 0; }, DispatcherEventType.CameraMoveAway));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse ScrollWheel") == 0; }, DispatcherEventType.CameraFixDistance));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse X") == 0; }, DispatcherEventType.StopHorizontalMouseMotion));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse X") > 0; }, DispatcherEventType.TurnRight));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse X") < 0; }, DispatcherEventType.TurnLeft));
-
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse Y") == 0; }, DispatcherEventType.StopVerticalMouseMotion));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse Y") > 0; }, DispatcherEventType.TurnUp));
-        gameModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate  { return Input.GetAxis("Mouse Y") < 0; }, DispatcherEventType.TurnDown));
-
-
+//        stonePrefab = GameObject.Find("StonePrefab");
+//        arrowPrefab = GameObject.Find("ArrowPrefab");
+//        magnetPrefab = GameObject.Find("MagnetPrefab");
+//        playerCameraPrefab = GameObject.Find("PlayerCameraPrefab");
 //
-//        mouseRotateHorizontalCommand = new TurnViewHorizontalCommand(characterModel, cameraModel);
-//        mouseRotateVerticalCommand = new TurnViewVerticalCommand(characterModel, cameraModel);
-//
-//
-//// Change distance from camera to character //
-//        mouseWheelRotationCommand = new MouseWheelRotationCommand(cameraModel);
+//        if (arrowPrefab == null) {
+//            print("arrowPrefab is null");
+//        }
+//        if (stonePrefab == null) {
+//            print("stonePrefab is null");
+//        }
+//        if (magnetPrefab == null) {
+//            print("magnetPrefab is null");
+//        }
+//        if (playerCameraPrefab == null) {
+//            print("playerCameraPrefab is null");
+//        }
 
     }
 
-    private void InitiateInventoryModeKeyBinderEvents() {
-        inventoryModeKeyBinder = gameObject.AddComponent<Dispatcher>();
+    private void SubscribeOnConsoleEvents() {
+        gameModeConsoleEventSystem.pauseModeEvent += SwitchGameMode;
 
-        inventoryModeKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return Input.GetKeyDown(KeyCode.P); }, DispatcherEventType.Pause));
+        pauseModeConsoleEventSystem.pauseModeEvent += SwitchGameMode;
     }
 
-    private void SelectKeyBinder() {
+
+
+
+    // *****************************************************************
+    // *****************************************************************
+    // *****************************************************************
+
+
+    private void SelectAppropriateConsoleEventSystem() {
         if (IsPlaying) {
-            gameModeKeyBinder.enabled = true;
-            inventoryModeKeyBinder.enabled = false;
-//            currentKeyBinder = gameModeKeyBinder;
+            consoleReader.SetControllerEventSystem(gameModeConsoleEventSystem);
         } else {
-            gameModeKeyBinder.enabled = false;
-            inventoryModeKeyBinder.enabled = true;
-//            currentKeyBinder = inventoryModeKeyBinder;
+            consoleReader.SetControllerEventSystem(pauseModeConsoleEventSystem);
         }
     }
+
 
     private void SetInventoryCanvasVisibility() {
         if (IsPlaying) {
@@ -263,142 +184,131 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void ReinitiateSettingsForCurrentMode() {
-        SelectKeyBinder();
+
+
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+    // ############################################################################ //
+
+
+
+    private void ReinitiateSettingsForCurrentMode()
+    {
+        SelectAppropriateConsoleEventSystem();
         SetInventoryCanvasVisibility();
     }
 
-    public void GoToMode(GameMode mode) {
-        gameMode = mode;
+    public void GoToMode(GameMode mode)
+    {
+        currentMode = mode;
         ReinitiateSettingsForCurrentMode();
     }
 
 
+    public void SwitchGameMode()
+    {
 
-    // Event Methods ////////////////////////////////////////////////////
-
-    public void ChangeGameMode() {
-//        print("changeMode was invoked");
-
-        if (IsPlaying) {
-            gameMode = GameMode.Inventory;
-        } else {
-            gameMode = GameMode.GamePlay;
+        if (IsPlaying)
+        {
+            currentMode = GameMode.Inventory;
+        }
+        else
+        {
+            currentMode = GameMode.GamePlay;
         }
         ReinitiateSettingsForCurrentMode();
     }
 
 
 
-
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-    // ############################################################################ //
-
-
-
-
-
-    private void InitiateEnemySpells()
+    public void HereIAm(GameObject gob)
     {
-        enemySpells = enemyObject.GetComponent<EquippedSpells>();
+        TeamID tid= gob.GetComponent<TeamID>();
 
-        enemySpells.AddSpell(new SimpleDistantSpell(new StoneThrowingAction(stonePrefab)));
-        enemySpells.AddSpell(new SimpleDistantSpell(new BowShotAction(arrowPrefab)));
-        enemySpells.AddSpell(new SimpleDistantSpell(new WindSpellAction()));
-        enemySpells.AddSpell(new SimpleDistantSpell(new MagnetoSpellAction(magnetPrefab)));
-
-    }
-
-    private void InitiateEnemyKeyBinder()
-    {
-        enemyKeyBinder = enemyObject.AddComponent<Dispatcher>();
-
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.WalkingLeft));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.WalkingRight));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.WalkingBackward));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return enemyController.MovingForward(); }, DispatcherEventType.RunningForward));
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StartWalkLeft));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StartWalkRight));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StartWalkBackward));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return enemyController.MovingForward(); }, DispatcherEventType.StartRunForward));
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopWalkLeft));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopWalkRight));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopWalkBackward));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopRunForward));
-
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.PreviousSpell));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.NextSpell));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.PowerAttack));
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return enemyController.TurnLeft(); }, DispatcherEventType.StopHorizontalMouseMotion));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return enemyController.TurnRight(); }, DispatcherEventType.TurnRight));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.TurnLeft));
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.Jump));
-
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate {
-            return false;
-        }, DispatcherEventType.Walking));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate {
-            return false;
-        }, DispatcherEventType.NotWalking));
-
-
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopCharRotation));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.ResumeCharRotation));
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate {
-            return false;
-        }, DispatcherEventType.CameraDefaults));
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.CameraMoveNear));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.CameraMoveAway));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.CameraFixDistance));
-
-
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.StopVerticalMouseMotion));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.TurnUp));
-        enemyKeyBinder.AddKeyEvent(new DispatcherEvent(delegate { return false; }, DispatcherEventType.TurnDown));
-
-
-    }
-
-    // ############################################################################ //
-    // $###################
-
-
-        
-
-    void Update()
-    {
-
-        if (enemyController.NearEnough(player))
+        if (tid != null)
         {
-            Vector3 e2pDistance = enemyController.FindDirection(player);
+            // It is a character //
 
-            
+            InitiateSpells(gob, new AbstractSpell[] {
+                    new SimpleDistantSpell(new BowShotAction(arrowPrefab)),
+                    new SimpleDistantSpell(new StoneThrowingAction(stonePrefab)),
+                    new SimpleDistantSpell(new WindSpellAction()),
+                    new SimpleDistantSpell(new MagnetoSpellAction(magnetPrefab)),
+                });
+
+            if (tid.ThisTeam == TeamID.Teams.A)
+            {
+                // This is a player controlled character //
+                player = gob;
+                targetingPoint = player.transform.Find("HeadTop/TargetPoint").gameObject;
+                characterFace = player.transform.Find("CharacterFace").gameObject;
+
+                // Init Controller //
+                player.GetComponent<CharacterModel>().SetEventsSystem(gameModeConsoleEventSystem);
+
+                GetComponent<PlayerStateInfo>().SetInfoSource(player);
+
+                InitCamera();
+
+            } else
+            {
+                // This is NPC //
+
+                // Init Controller //
+                ControllerEventSystem ces = new ControllerEventSystem();
+                gob.GetComponent<CharacterModel>().SetEventsSystem(ces);
+                AbstractAIController cAI = gob.AddComponent<TeamBAIController>();
+                cAI.SetControllerEventSystem(ces);
+
+                enemyAIsList.Add(cAI);
+
+            }
         } else
         {
-            enemyController.MoveDirection = 0;
-            enemyController.TurnDirection = 0;
+            // it is not a character //
+
         }
     }
+
+
+
+
+
+    private void InitiateSpells(GameObject go, AbstractSpell[] spellsArray)
+    {
+        EquippedSpells spells = go.AddComponent<EquippedSpells>();
+
+        foreach (AbstractSpell abSpell in spellsArray)
+        {
+            spells.AddSpell(abSpell);
+        }
+
+        go.GetComponent<CharacterModel>().SetSpells(spells);
+    }
+
+
+    private void InitCamera() {
+
+        playerCamera = Instantiate(playerCameraPrefab, targetingPoint.transform.position, targetingPoint.transform.rotation);
+
+        playerCamera.GetComponent<SatelliteModel>().SetEventsSystem(gameModeConsoleEventSystem);
+
+        CharacterCameraMover mover = playerCamera.GetComponent<CharacterCameraMover>();
+
+        mover.ViewTargetObject = targetingPoint;
+        mover.PlayerFace = characterFace;
+    }
+
+
+
+
+    /// /////////////////////////////////////////////////////////////////////
+    void Update()
+    {
+    }
+
 
 }

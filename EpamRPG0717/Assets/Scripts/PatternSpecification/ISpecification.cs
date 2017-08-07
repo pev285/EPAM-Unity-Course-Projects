@@ -4,7 +4,7 @@ public interface ISpecification<TEntity>
 {
     bool IsSatisfiedBy(TEntity entity);
 }
-
+ 
 internal class AndSpecification<TEntity> : ISpecification<TEntity>
 {
     private readonly ISpecification<TEntity> _spec1;

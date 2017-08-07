@@ -8,7 +8,6 @@ public interface IGameObjectSpecification : ISpecification<GameObject> {
 //    string ToString();
 }
 
-
 internal class AndGameObjectSpecification : IGameObjectSpecification
 {
     private readonly IGameObjectSpecification _spec1;

@@ -16,9 +16,7 @@ public class StoneThrowingAction : AbstractSpellAction {
 	}
 
     [SerializeField]
-    private Vector3 relativeSpellCastPosition = new Vector3(0, 1.5f, 0.8f);
-//    [SerializeField]
-//    private float flightTime = 3.0f;
+    private Vector3 relativeSpellCastPosition = new Vector3(0, 2.5f, 1.8f);
 
     private GameObject stonePrefab;
 
@@ -26,17 +24,11 @@ public class StoneThrowingAction : AbstractSpellAction {
         this.stonePrefab = stonePrefab;
     }
 
-	public override void Cast(GameObject caster, GameObject casterCamera, GameObject targetingPoint) {
-		GameObject newStone = GameObject.Instantiate(stonePrefab, caster.transform.position + caster.transform.rotation * relativeSpellCastPosition,
-                caster.transform.rotation, caster.transform);
+	public override void Cast(GameObject caster, Quaternion castRotation) {
 
-
-//        Rigidbody stoneRigidBody = newStone.GetComponent<Rigidbody>();
-////        stoneRigidBody.velocity = (caster.transform.forward * bulletInitialVelocity);
-//		stoneRigidBody.AddForce(caster.transform.forward * stoneThrowingForce);
-//
-
-//        new DestroyTimer(newStone, flightTime);
+        GameObject newStone = GameObject.Instantiate(stonePrefab, 
+                caster.transform.position + caster.transform.rotation * relativeSpellCastPosition,
+                castRotation/*caster.transform.rotation*/, caster.transform);
     }
 
 

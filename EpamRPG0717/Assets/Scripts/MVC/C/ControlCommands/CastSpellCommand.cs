@@ -16,6 +16,6 @@ public class CastSpellCommand : AbstractCommand{
     }
 
     public override void Execute() {
-        spell.Cast(caster, casterCamera, targetingPoint);
+        spell.Cast(caster, caster.transform.rotation);
     }
 }

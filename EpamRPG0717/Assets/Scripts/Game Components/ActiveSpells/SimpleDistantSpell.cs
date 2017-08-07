@@ -20,9 +20,9 @@ public class SimpleDistantSpell : AbstractSpell{
         this.action = action;
     }
 
-    public override void Cast(GameObject caster, GameObject casterCamera, GameObject targetingPoint) {
+    public override void Cast(GameObject caster, Quaternion castRotation) {
 
-        action.Cast(caster, casterCamera, targetingPoint);
+        action.Cast(caster, castRotation);
     }
 }
 

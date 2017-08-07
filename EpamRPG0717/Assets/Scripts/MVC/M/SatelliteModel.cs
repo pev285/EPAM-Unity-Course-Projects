@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class SatelliteModel : MonoBehaviour {
 
-
-
-
     [SerializeField]
     private float satelliteDistance;
-
-//    [SerializeField]
-//    private Vector3 satelliteViewDirection;
     [SerializeField]
     private float satelliteHorDeviationAngle;
     [SerializeField]
     private float satelliteVertDeviationAngle;
+
+    private float saveSatelliteDistance;
+    private float saveSatelliteHorDeviationAngle;
+    private float saveSatelliteVertDeviationAngle;
 
 
     [SerializeField]
@@ -27,17 +25,33 @@ public class SatelliteModel : MonoBehaviour {
 
 
 
-    private const float minSatelliteDistance = 1f;
-    private const float defaultCameraDistance = 20f;//1.5f;
-    private const float defaultVertDeviationAngle = 15f;
-    private const float defaultHorDeviationAngle = 0f;
+    [SerializeField]
+    private float minSatelliteDistance = 0f;
+    [SerializeField]
+    private float defaultCameraDistance = 1.5f;
+    [SerializeField]
+    private float defaultVertDeviationAngle = 15f;
+    [SerializeField]
+    private float defaultHorDeviationAngle = 0f;
 
 
 
-    private Dispatcher gameModeKeyBinder;
 
     [SerializeField]
     private bool relativePositionChangeMode = false;
+
+///////////////////////
+
+    private ControllerEventSystem controllerES;
+
+    public void SetEventsSystem(ControllerEventSystem ces)
+    {
+        this.controllerES = ces;
+
+        SubscribeOnKeyboardEvents();
+    }
+////////////////////
+
 
 // ******************************************************************* //
     public void TurnHorizontal(float shift) {
@@ -71,10 +85,45 @@ public class SatelliteModel : MonoBehaviour {
         relativePositionChangeMode = true;
     }
 
+    public void SatelliteMovementOff() {
+        relativePositionChangeMode = false;
+    }
+
+
+    private Vector3 savePosition;
+    private Quaternion saveRotation;
+
+    public void PrepareForFiringWeapon() {
+        SaveSatelliteParameters();
+
+        satelliteDistance = 0;
+        satelliteHorDeviationAngle = 0;
+        //satelliteVertDeviationAngle = 0;
+    }
+
+    public void AftreFiringTheWeapon() {
+        new Timer(gameObject, () => {RestoreSatelliteParameters();}, 1f);
+
+    }
+
+
+    private void SaveSatelliteParameters() {
+        saveSatelliteDistance = satelliteDistance;
+        saveSatelliteHorDeviationAngle = satelliteHorDeviationAngle;
+        saveSatelliteVertDeviationAngle = satelliteVertDeviationAngle;
+    }
+    private void RestoreSatelliteParameters() {
+        satelliteDistance = saveSatelliteDistance;
+        satelliteHorDeviationAngle = saveSatelliteHorDeviationAngle;
+        satelliteVertDeviationAngle = saveSatelliteVertDeviationAngle;
+    }
+
+
     ////////////////////////////////////////////////////////////
     // ###################################################### //
     ////////////////////////////////////////////////////////////
-//
+
+
 //    public Vector3 ViewDirection {
 //        get {
 //            return satelliteViewDirection;
@@ -101,59 +150,36 @@ public class SatelliteModel : MonoBehaviour {
 
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////
 
 // Use this for initialization
 	void Start () {
 
 	    SetSatelliteDefaults();
 
-        SubscribeOnKeyboardEvents();
-
 	}
 
+
+
     private void SubscribeOnKeyboardEvents() {
-        gameModeKeyBinder = GameManager.Instance.GameModeKeyBinder;
-
-        gameModeKeyBinder.StartListening(DispatcherEventType.StopCharRotation, delegate  {
-            relativePositionChangeMode = true;
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.ResumeCharRotation, delegate  {
-            relativePositionChangeMode = false;
-        });
 
 
-        gameModeKeyBinder.StartListening(DispatcherEventType.TurnRight, delegate  {
-            TurnHorizontal(Input.GetAxis("Mouse X"));
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.TurnLeft, delegate  {
-            TurnHorizontal(Input.GetAxis("Mouse X"));
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.TurnUp, delegate  {
-            TurnVertical(Input.GetAxis("Mouse Y"));
-//            satelliteVertDeviationAngle -= vertRotationSpeed * Input.GetAxis("Mouse Y");
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.TurnDown, delegate  {
-            TurnVertical(Input.GetAxis("Mouse Y"));
-        });
-
-        gameModeKeyBinder.StartListening(DispatcherEventType.CameraMoveNear, delegate  {
-            ChangeApproach(Input.GetAxis("Mouse ScrollWheel"));
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.CameraMoveAway, delegate  {
-            ChangeApproach(Input.GetAxis("Mouse ScrollWheel"));
-        });
-
-//        CameraFixDistance,
-//        StopHorizontalMouseMotion,
-//        StopVerticalMouseMotion,
+        controllerES.turnHorizontalEvent += TurnHorizontal;
+        controllerES.turnVerticalEvent += TurnVertical;
+        controllerES.changeCameraDistanceEvent += ChangeApproach;
 
 
-        gameModeKeyBinder.StartListening(DispatcherEventType.CameraDefaults, delegate  {
-            SetSatelliteDefaults();
-        });
+        controllerES.prepareToFireEvent += PrepareForFiringWeapon;
+        controllerES.fireEvent += AftreFiringTheWeapon;
+
+        controllerES.startMoveCameraEvent += SatelliteMovementOn;
+        controllerES.stopMoveCameraEvent += SatelliteMovementOff;
+        controllerES.loadCameraDefaultsEvent += SetSatelliteDefaults;
 
     }
-	
 
-}
+
+
+
+} // End Of Class //
+

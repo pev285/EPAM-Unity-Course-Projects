@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ComplexSpell : AbstractSpell {
 
-    private string name = "";
-    private string description = "";
+    private string name = "ComplexSpell";
+    private string description = "ComplexSpell";
 
 
     public override string Name {
@@ -39,9 +39,9 @@ public class ComplexSpell : AbstractSpell {
 
     }
 
-    public override void Cast(GameObject caster, GameObject casterCamera, GameObject targetingPoint) {
+    public override void Cast(GameObject caster, Quaternion castRotation) {
         foreach (AbstractSpellAction action in spellActions) {
-            action.Cast(caster, casterCamera, targetingPoint);
+            action.Cast(caster, castRotation);
         }
     }
 }

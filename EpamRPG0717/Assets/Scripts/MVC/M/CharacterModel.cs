@@ -5,7 +5,6 @@ using UnityEngine;
 public class CharacterModel : AbstractCharacterControllingModel {
 
 
-//    private GameObject attackingPoint;
 
     // GoundCheck //
     [SerializeField]
@@ -18,7 +17,8 @@ public class CharacterModel : AbstractCharacterControllingModel {
     private bool specialAttack = false;
     [SerializeField]
     private bool jumping = false;
-
+    [SerializeField]
+    private bool isTargeting = false;
 
     [SerializeField]
     private float forwardVelocity = 0;
@@ -26,8 +26,8 @@ public class CharacterModel : AbstractCharacterControllingModel {
     private float sidewardVelocity = 0;
     [SerializeField]
     private float horizontalRotationAmount = 0;
-    [SerializeField]
-    private float verticalRotationAmount = 0;
+//    [SerializeField]
+//    private float verticalRotationAmount = 0;
 
 
     //////////////////////////////////////////////
@@ -35,16 +35,16 @@ public class CharacterModel : AbstractCharacterControllingModel {
     [SerializeField]
     private const float mouseWeelSpeed = 6.0f;
     [SerializeField]
-    private float vertRotationSpeed = 2f; //0.5f;
-    [SerializeField]
-    private float horizRotationSpeed = 2f; //0.5f;
+//    private float vertRotationSpeed = 2f; //0.5f;
+//    [SerializeField]
+    private float horizRotationSpeed = 30f; //0.5f;
 
 
 
     [SerializeField]
-    private float runSpeed = 30f;//120f;
+    private float runSpeed = 140f;//120f;
     [SerializeField]
-    private float walkSpeed = 15f; //80f;
+    private float walkSpeed = 100f; //80f;
 
     [SerializeField]
     private float jumpUpForce = 200f;
@@ -53,58 +53,81 @@ public class CharacterModel : AbstractCharacterControllingModel {
     [SerializeField]
     private bool turnableAround = true;
 
-//////////////////////////////////////////////////////
 
-    private Dispatcher gameModeKeyBinder;
+    [SerializeField]
+    private Vector3 startingPosition;
+
+
+//////////////////////////////////////////////////////
 
     private EquippedSpells spells;
 
-    
+    private ControllerEventSystem ces;
+
+    public void SetEventsSystem(ControllerEventSystem ces)
+    {
+        this.ces = ces;
+
+        SubscribeOnKeyboardEvents();
+    }
+
+    public void SetSpells(EquippedSpells spells) {
+        this.spells = spells;
+    }
 
     private void SubscribeOnKeyboardEvents() {
-        gameModeKeyBinder = GameManager.Instance.GameModeKeyBinder;
 
-        gameModeKeyBinder.StartListening(DispatcherEventType.StartRunForward, delegate  {
-            forwardVelocity = runSpeed;
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.StopRunForward, delegate  {
-            forwardVelocity = 0;
-        });
+        ces.startForwardEvent += MoveForward;
+        ces.stopForwardEvent += StopMoveForward;
 
-        gameModeKeyBinder.StartListening(DispatcherEventType.StartWalkBackward, delegate  {
-            forwardVelocity = -walkSpeed;
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.StopWalkBackward, delegate  {
-            forwardVelocity = 0;
-        });
+        ces.startRightEvent += MoveRight;
+        ces.stopRightEvent += StopMoveRight;
 
-        gameModeKeyBinder.StartListening(DispatcherEventType.Jump, delegate  {
-            if(IsGrounded) {
-                jumping = true;
-            }
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.TurnRight, delegate  {
-            if(turnableAround) {
-                horizontalRotationAmount = horizRotationSpeed * Input.GetAxis("Mouse X");
-            }
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.TurnLeft, delegate  {
-            if (turnableAround) {
-                horizontalRotationAmount = horizRotationSpeed * Input.GetAxis("Mouse X");
-            }
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.StopHorizontalMouseMotion, delegate  {
-            horizontalRotationAmount = 0;
-        });
+        ces.startLeftEvent += MoveLeft;
+        ces.stopLeftEvent += StopMoveLeft;
 
-        gameModeKeyBinder.StartListening(DispatcherEventType.StopCharRotation, delegate  {
-            turnableAround = false;
-            horizontalRotationAmount = 0;
-        });
-        gameModeKeyBinder.StartListening(DispatcherEventType.ResumeCharRotation, delegate  {
-            turnableAround = true;
-        });
+        ces.startBackEvent += MoveBackward;
+        ces.stopBackEvent += StopMoveBackward;
 
+
+        ces.jumpEvent += Jump;
+
+        ces.turnHorizontalEvent += TurnHorizontal;
+
+        ces.fireEvent += SpecialAttack;
+
+
+        ces.startMoveCameraEvent += HorizontalRotationOff;
+        ces.stopMoveCameraEvent += HorizontalRotationOn;
+
+//        hitEvent;
+//
+        ces.nextSpellEvent += NextSpell;
+        ces.previousSpellEvent += PrevSpell;
+
+
+
+    }
+
+    public void NextSpell() {
+        spells.ShiftForward();
+    }
+    public void PrevSpell() {
+        spells.ShiftBackward();
+    }
+    public void CastSpell() {
+        spells.GetCurrentSpell().Cast(gameObject, GameManager.Instance.GetPlayerCameraRotation());
+    }
+
+
+
+
+public void HorizontalRotationOn() {
+        turnableAround = true;
+    }
+
+    public void HorizontalRotationOff() {
+        turnableAround = false;
     }
 
 ///////////////////////////////////////////////////////////
@@ -113,20 +136,57 @@ public class CharacterModel : AbstractCharacterControllingModel {
 
 
     public override void MoveForward() {
-        forwardVelocity = runSpeed * Time.deltaTime;
+        forwardVelocity += runSpeed;
+//        if (forwardVelocity > runSpeed) {
+//            forwardVelocity = runSpeed;
+//        }
+    }
+    public override void StopMoveForward() {
+        forwardVelocity -= runSpeed;
+//        if (forwardVelocity > 0 ) {
+//            forwardVelocity = 0;
+//        }
     }
 
     public override void MoveBackward() {
-        forwardVelocity = -walkSpeed * Time.deltaTime;
+        forwardVelocity -= walkSpeed;
+//        if (forwardVelocity < -walkSpeed) {
+//            forwardVelocity = -walkSpeed;
+//        }
+    }
+    public override void StopMoveBackward() {
+        forwardVelocity += walkSpeed;
+//        if (forwardVelocity < 0) {
+//            forwardVelocity = 0;
+//        }
     }
 
     public override void MoveRight() {
-        sidewardVelocity = walkSpeed * Time.deltaTime;
+        sidewardVelocity += walkSpeed;
+//        if (sidewardVelocity > walkSpeed) {
+//            sidewardVelocity = walkSpeed;
+//        }
+    }
+    public override void StopMoveRight() {
+        sidewardVelocity -= walkSpeed;
+//        if (sidewardVelocity > 0) {
+//            sidewardVelocity = 0;
+//        }
     }
 
     public override void MoveLeft() {
-        sidewardVelocity = -walkSpeed * Time.deltaTime;
+        sidewardVelocity -= walkSpeed;
+//        if (sidewardVelocity < -walkSpeed) {
+//            sidewardVelocity = -walkSpeed;
+//        }
     }
+    public override void StopMoveLeft() {
+        sidewardVelocity += walkSpeed;
+//        if (sidewardVelocity < 0) {
+//            sidewardVelocity = 0;
+//        }
+    }
+
 
     public override void Jump() {
         if (IsGrounded) {
@@ -138,44 +198,35 @@ public class CharacterModel : AbstractCharacterControllingModel {
         if (IsGrounded) {
             specialAttack = true;
         }
+
+        CastSpell();
     }
 
     public override void TurnHorizontal(float shift) {
-        horizontalRotationAmount = horizRotationSpeed * shift * Time.deltaTime;
+        if (turnableAround) {
+            horizontalRotationAmount = horizRotationSpeed * shift;
+        }
     }
 
     public override void TurnVertical(float shift) {
-        verticalRotationAmount = vertRotationSpeed * shift * Time.deltaTime;
+//        verticalRotationAmount = vertRotationSpeed * shift;
     }
 
 
-//    public void StopForward() {
-//        forwardVelocity = 0;
-//    }
-//
-//    public void StopSideward() {
-//        sidewardVelocity = 0;
-//    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     //**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-    public override bool IsGrounded {
-        get {return isGrounded;}
+    public override  bool IsTargeting {
+        get { return isTargeting; }
     }
 
-//    public bool IsJumping {
-//        get {
-//            if (jumping) {
-//                jumping = false;
-//                return true;
-//            }
-//            return false;
-//        }
-//    }
+    public override bool IsGrounded {
+        get { return isGrounded; }
+    }
+
 
     public override float GetJumpForce() {
         if (jumping) {
@@ -197,26 +248,26 @@ public class CharacterModel : AbstractCharacterControllingModel {
 
 
     public override float GetForwardVelocity() {
-        float tmp = forwardVelocity; // * Time.deltaTime;
+        float tmp = forwardVelocity; 
 //        forwardVelocity = 0;
         return tmp;
     }
 
     public override float GetSidewardVelocity() {
-        float tmp = sidewardVelocity; // * Time.deltaTime;
+        float tmp = sidewardVelocity; 
 //        sidewardVelocity = 0;
         return tmp;
     }
 
     public override float GetHorizontalRotation() {
-        float tmp = horizontalRotationAmount;// * Time.deltaTime;
+        float tmp = horizontalRotationAmount;
 //        horizontalRotationAmount = 0;
         return tmp;
     }
 
     public override float GetVerticalRotation() {
 
-        float tmp = verticalRotationAmount; // * Time.deltaTime;
+        float tmp = 0;//verticalRotationAmount;
 //        verticalRotationAmount = 0;
         return tmp;
     }
@@ -226,18 +277,16 @@ public class CharacterModel : AbstractCharacterControllingModel {
     //**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Use this for initialization
 	void Start () {
 
-		//position = gameObject.transform.position;
+        startingPosition = transform.position;
+
+
         lastTimeY = gameObject.transform.position.y;
 
-        spells = GetComponent<EquippedSpells>();
-
-        SubscribeOnKeyboardEvents();
+//        spells = GetComponent<EquippedSpells>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 
         RecalculateGrounded();

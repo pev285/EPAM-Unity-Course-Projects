@@ -17,7 +17,7 @@ public class zzzEnemyRepresentation : MonoBehaviour
 
     //    [SerializeField]
     private GameObject character;
-    private EnemyModel model;
+    private CharacterModel model;
 
     private Rigidbody rgBody;
 
@@ -35,14 +35,14 @@ public class zzzEnemyRepresentation : MonoBehaviour
     void Start()
     {
         character = gameObject;
-        model = character.GetComponent<EnemyModel>();
+        model = character.GetComponent<CharacterModel>();
 
         rgBody = GetComponent<Rigidbody>();
         //animator = GetComponent<Animator>();
 
 
 
-        gameModeKeyBinder = GameManager.Instance.GameModeKeyBinder;
+//        gameModeKeyBinder = GameManager.Instance.GameModeKeyBinder;
 
         //  subscribeAnimationEvent();
 

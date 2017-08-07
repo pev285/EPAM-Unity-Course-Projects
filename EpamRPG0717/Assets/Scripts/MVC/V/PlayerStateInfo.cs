@@ -4,18 +4,19 @@ using UnityEngine;
 public class PlayerStateInfo : MonoBehaviour{
 
     private EquippedSpells spells;
+    private Health health;
 
-    void Start() {
-        spells = gameObject.GetComponent<EquippedSpells>();
-        if (spells == null) {
-            print("Spells are null");
-        }
+
+    public void SetInfoSource(GameObject player) {
+        this.spells = player.GetComponent<EquippedSpells>();;
+        this.health = player.GetComponent<Health>();
     }
 
-    enum TestEnum {aaaa, bbbb, cccc};
 
     void Update() {
         StringBuilder sb = new StringBuilder();
+        sb.Append("Health: ").Append(health.CurrentHP).Append(" of ").Append(health.MaxHP);
+        sb.Append("\n");
         sb.Append("Current Spell: ");
         sb.Append(spells.GetCurrentSpell().Name);//.Append(": ").Append(spells.GetCurrentSpell().Description);
         sb.Append("\n");
