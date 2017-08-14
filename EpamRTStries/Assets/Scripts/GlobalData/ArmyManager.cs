@@ -86,7 +86,7 @@ public class ArmyManager {
         newUnit = buildingFactory.CreateGameUnit(type, position);
 
         newUnit.ID = nextID;
-        newUnit.Description = "Building - " + type.ToString() + " of " + ArmyDescription + ", id=" + newUnit.ID;
+        newUnit.Description = "Building - " + type.ToString() + " of " + ArmyDescription;
 
         buildings.Add(nextID, newUnit);
 

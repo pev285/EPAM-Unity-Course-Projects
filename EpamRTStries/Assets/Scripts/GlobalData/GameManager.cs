@@ -50,8 +50,6 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField]
     private ScriptablePrototypesLists scriptablePrototypesList;
-
-
     private int archerIndex = 0; //(int)Identification.UnitType.Archer;
     private int swordsmanIndex = 1;
     private int horsemanIndex = 2;
@@ -60,12 +58,15 @@ public class GameManager : MonoBehaviour {
     private int barrackIndex = 1;
 
 
+    //////////////////////////////////////////////////////////////////////////////////////
+
+
     private int orcArmyStartingID = 100000000;
     private int humanArmyStartingID = 20000000;
     private int goblinArmyStartingID = 300000000;
 
-    private string orcArmyDescription = "Orcs Army";
-    private string humanArmyDescription = "Humans Army";
+//    private string orcArmyDescription = "Orcs Army";
+//    private string humanArmyDescription = "Humans Army";
 
     private Dictionary<Identification.UnitType, ClonnableGameUnit> humanWarriorsPrototypes;
     private Dictionary<Identification.UnitType, ClonnableGameUnit> orcWarriorsPrototypes;

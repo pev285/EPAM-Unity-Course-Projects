@@ -19,7 +19,7 @@ public class ClonnableGameUnit : AbstractGameUnit {
     private string description;
     public override string Description {
         get {
-            return description;
+            return description + ", id=" + ID + ", current HP=" + CurrentHP;
         }
         set {
             description = value;

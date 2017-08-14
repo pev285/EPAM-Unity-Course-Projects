@@ -36,7 +36,7 @@ public class CameraMover : MonoBehaviour {
 
 
 
-    private float step = 0.1f;
+    private float step = 0.3f;
     private float epsilon = 0.001f;
 
     private float limitedValue(float value, float min, float max) {
@@ -101,9 +101,16 @@ public class CameraMover : MonoBehaviour {
                 transform.position = Vector3.Lerp(transform.position, moveAtPosition, step);
             }
 
-            thisCamera.orthographicSize = Mathf.Lerp(thisCamera.orthographicSize, moveAtCamSize, step);
         }
 
+        if (thisCamera.orthographicSize != moveAtCamSize) {
+            if (thisCamera.orthographicSize - moveAtCamSize < epsilon) {
+                thisCamera.orthographicSize = moveAtCamSize;
+            } else {
+
+                thisCamera.orthographicSize = Mathf.Lerp(thisCamera.orthographicSize, moveAtCamSize, step);
+            }
+        }
 
 	} // Update() //
 

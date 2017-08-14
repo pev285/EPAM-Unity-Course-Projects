@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class InputChecker : MonoBehaviour {
 
@@ -9,9 +8,6 @@ public class InputChecker : MonoBehaviour {
     private float mouseWheelSpeed = 3;
 
 
-	// Use this for initialization
-	void Start () {
-	}
 
     [SerializeField]
     private CameraMover cameraMover;
@@ -19,11 +15,66 @@ public class InputChecker : MonoBehaviour {
     [SerializeField]
     private int currentUnitTypeIndex = 0;
 
-	// Update is called once per frame
+
+
+
+    [SerializeField]
+    private Sprite sun;
+    [SerializeField]
+    private Sprite moon;
+    [SerializeField]
+    private GameObject sunMoonButton;
+
+    private Image sunMoonImage;
+    private bool nowIsSun = true;
+
+    public void SunMoonChange() {
+        if (nowIsSun) {
+            sunMoonImage.overrideSprite = moon;
+        } else {
+            sunMoonImage.overrideSprite = sun;
+        }
+
+        nowIsSun = !nowIsSun;
+    }
+
+
+// Use this for initialization
+    void Start () {
+
+        sunMoonImage = sunMoonButton.GetComponent<Image>();
+
+        HUDscript.HideFloatingPanel();
+    }
+
+
+// Update is called once per frame
 	void Update () {
 
-        cameraMover.ShiftX( Input.GetAxis( "Mouse X") * mouseSpeed );
-        cameraMover.ShiftZ( Input.GetAxis( "Mouse Y") * mouseSpeed );
+//        print("mouse x = " + Input.mousePosition.x + ", screen width = " + Screen.width
+//                            + ", screen height = " + Screen.height);
+
+        if (Input.mousePosition.x >= Screen.width) {
+            cameraMover.ShiftX(mouseSpeed);
+            HUDscript.HideFloatingPanel();
+        } else if (Input.mousePosition.x <= 0) {
+            cameraMover.ShiftX(-mouseSpeed);
+            HUDscript.HideFloatingPanel();
+        }
+
+        if (Input.mousePosition.y >= Screen.height) {
+            cameraMover.ShiftZ(mouseSpeed);
+            HUDscript.HideFloatingPanel();
+        } else if (Input.mousePosition.y <= 0) {
+            cameraMover.ShiftZ(-mouseSpeed);
+            HUDscript.HideFloatingPanel();
+        }
+
+
+
+//        cameraMover.ShiftX( Input.GetAxis( "Mouse X") * mouseSpeed );
+//        cameraMover.ShiftZ( Input.GetAxis( "Mouse Y") * mouseSpeed );
+
         cameraMover.ShiftY( -Input.GetAxis("Mouse ScrollWheel") * mouseWheelSpeed );
 
 
@@ -40,11 +91,13 @@ public class InputChecker : MonoBehaviour {
             CreateCurrentUnit(GameManager.Instance.OrcArmyManager);
         }
 
+
         if (Input.GetKeyDown(KeyCode.RightArrow)) {
             currentUnitTypeIndex = (currentUnitTypeIndex + 1) % 5;
         }
 
     } // Update //
+
 
 
     private void CreateCurrentUnit(ArmyManager armyManager) {
@@ -60,11 +113,22 @@ public class InputChecker : MonoBehaviour {
             GameUnitID unitId = hit.collider.gameObject.GetComponent<GameUnitID>();
 
             if (unitId != null) {
-                if (unitId.Army == Identification.Army.Humans) {
-                    AbstractGameUnit unit = GameManager.Instance.HumanArmyManager.FindGameUnit(unitId.PersonalID);
-                    HUDscript.Message("You clicked:: " + unit.Description);
-                } else {
 
+                ArmyManager clickedUnitArmyManager = null;
+
+                switch(unitId.Army) {
+                    case Identification.Army.Humans:
+                        clickedUnitArmyManager = GameManager.Instance.HumanArmyManager;
+                    break;
+                    case Identification.Army.Orcs:
+                        clickedUnitArmyManager = GameManager.Instance.OrcArmyManager;
+                    break;
+                }
+
+                AbstractGameUnit unit = clickedUnitArmyManager.FindGameUnit(unitId.PersonalID);
+                if (unit != null) {
+                    HUDscript.ShowFloatingPanelAt(Input.mousePosition.x, Input.mousePosition.y, "[You clicked]:: " + unit.Description);
+//                    HUDscript.Message("[You clicked]:: " + unit.Description);
                 }
 
             } else {
@@ -92,7 +156,7 @@ public class InputChecker : MonoBehaviour {
                 }
 
 
-                HUDscript.Message("Created: " + unit.Description);
+                HUDscript.Message("Last created: " + unit.Description);
             }
 
 
