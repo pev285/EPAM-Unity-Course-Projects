@@ -13,6 +13,7 @@ public class ControllerEventSystem
     public event Action stopRightEvent;
     public event Action stopLeftEvent;
     public event Action stopBackEvent;
+    public event Action stopAllEvent;
 
     public event Action<float> turnHorizontalEvent;
     public event Action<float> turnVerticalEvent;
@@ -35,6 +36,14 @@ public class ControllerEventSystem
     public event Action pauseModeEvent;
 
     /////////////////////////////////////////////////////////////////
+
+    public void InvokeStopAllEvent()
+    {
+        if (stopAllEvent != null)
+        {
+            stopAllEvent();
+        }
+    }
 
     public void InvokePauseModeEvent() {
         if (pauseModeEvent != null) {

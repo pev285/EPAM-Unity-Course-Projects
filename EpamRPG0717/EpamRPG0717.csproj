@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -127,10 +129,16 @@
     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerController01.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerController02.cs" />
-    <Compile Include="Assets\Scripts\FriendOrFoe\AIKeyBinder.cs" />
-    <Compile Include="Assets\Scripts\FriendOrFoe\EnemyController.cs" />
-    <Compile Include="Assets\Scripts\FriendOrFoe\EnemyRepresentation.cs" />
+    <Compile Include="Assets\Scripts\EventsSystem\ControllerEventSystem.cs" />
+    <Compile Include="Assets\Scripts\EventsSystem\Dispatcher.cs" />
+    <Compile Include="Assets\Scripts\EventsSystem\DispatcherEvent.cs" />
+    <Compile Include="Assets\Scripts\EventsSystem\DispatcherEventType.cs" />
+    <Compile Include="Assets\Scripts\EventsSystem\EventSystem.cs" />
+    <Compile Include="Assets\Scripts\FriendOrFoe\FriendOrFoe.cs" />
     <Compile Include="Assets\Scripts\FriendOrFoe\TeamID.cs" />
+    <Compile Include="Assets\Scripts\FriendOrFoe\zzzAIKeyBinder.cs" />
+    <Compile Include="Assets\Scripts\FriendOrFoe\zzzEnemyController.cs" />
+    <Compile Include="Assets\Scripts\FriendOrFoe\zzzEnemyRepresentation.cs" />
     <Compile Include="Assets\Scripts\Game Components\ActiveSpells\AbstractSpell.cs" />
     <Compile Include="Assets\Scripts\Game Components\ActiveSpells\AbstractSpellAction.cs" />
     <Compile Include="Assets\Scripts\Game Components\ActiveSpells\ComplexSpell.cs" />
@@ -196,8 +204,10 @@
     <Compile Include="Assets\Scripts\Game Components\Spells\Songs\FebSong.cs" />
     <Compile Include="Assets\Scripts\Game Components\Spells\Songs\GamelnSong.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager20170804.cs" />
     <Compile Include="Assets\Scripts\GlobalGameSettings.cs" />
     <Compile Include="Assets\Scripts\GrantSkillCollider.cs" />
+    <Compile Include="Assets\Scripts\HereIAmCallScript.cs" />
     <Compile Include="Assets\Scripts\Inventory\AbstractInventoryItem.cs" />
     <Compile Include="Assets\Scripts\Inventory\AbstractPhisicalInventoryItem.cs" />
     <Compile Include="Assets\Scripts\Inventory\AbstractPhisicalObject.cs" />
@@ -211,6 +221,7 @@
     <Compile Include="Assets\Scripts\Inventory\SpellInventoryItem.cs" />
     <Compile Include="Assets\Scripts\KeyboardCommandsLayout.cs" />
     <Compile Include="Assets\Scripts\Loader.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\ConsoleReaderController.cs" />
     <Compile Include="Assets\Scripts\MVC\C\ControlCommands\AbstractCommand.cs" />
     <Compile Include="Assets\Scripts\MVC\C\ControlCommands\BowShotCommand.cs" />
     <Compile Include="Assets\Scripts\MVC\C\ControlCommands\CameraDefaultPositionCommand.cs" />
@@ -229,13 +240,10 @@
     <Compile Include="Assets\Scripts\MVC\C\ControlCommands\WalkBackCommand.cs" />
     <Compile Include="Assets\Scripts\MVC\C\ControlCommands\WalkLeftCommand.cs" />
     <Compile Include="Assets\Scripts\MVC\C\ControlCommands\WalkRightCommand.cs" />
-    <Compile Include="Assets\Scripts\MVC\C\InputReader.cs" />
-    <Compile Include="Assets\Scripts\MVC\C\KeyBinder\KeyBinder.cs" />
-    <Compile Include="Assets\Scripts\MVC\C\KeyBinder\KeyboardDependentEvent.cs" />
-    <Compile Include="Assets\Scripts\MVC\C\KeyBinder\KeyboardEventType.cs" />
-    <Compile Include="Assets\Scripts\MVC\M\AbstractControllingModel.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\PrimitiveAIController.cs" />
+    <Compile Include="Assets\Scripts\MVC\C\zzzInputReader.cs" />
+    <Compile Include="Assets\Scripts\MVC\M\AbstractCharacterControllingModel.cs" />
     <Compile Include="Assets\Scripts\MVC\M\CharacterModel.cs" />
-    <Compile Include="Assets\Scripts\MVC\M\EnemyModel.cs" />
     <Compile Include="Assets\Scripts\MVC\M\SatelliteModel.cs" />
     <Compile Include="Assets\Scripts\MVC\V\Animators\AbstractVisualizer.cs" />
     <Compile Include="Assets\Scripts\MVC\V\Animators\DeathViz\AbstractDeathVisualizer.cs" />
@@ -244,8 +252,9 @@
     <Compile Include="Assets\Scripts\MVC\V\Animators\HitViz\AbstractProjectileHitVisualizer.cs" />
     <Compile Include="Assets\Scripts\MVC\V\Animators\HitViz\CrumbsVisualizer.cs" />
     <Compile Include="Assets\Scripts\MVC\V\Animators\SkillViz\MagnetoVisualizer.cs" />
-    <Compile Include="Assets\Scripts\MVC\V\CharacterCameraRepresentation.cs" />
-    <Compile Include="Assets\Scripts\MVC\V\CharacterRepresentation.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\CharacterAnimatorController.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\CharacterCameraMover.cs" />
+    <Compile Include="Assets\Scripts\MVC\V\CharacterMover.cs" />
     <Compile Include="Assets\Scripts\MVC\V\PlayerStateInfo.cs" />
     <Compile Include="Assets\Scripts\PatternSpecification\GameObjectSpecificationExtensionMethods.cs" />
     <Compile Include="Assets\Scripts\PatternSpecification\IGameObjectSpecification.cs" />
@@ -258,6 +267,18 @@
     <Compile Include="Assets\Scripts\PinguinsDemoScripts\PinguinController3.cs" />
     <Compile Include="Assets\Scripts\PinguinsDemoScripts\PortalScript.cs" />
     <Compile Include="Assets\Scripts\PinguinsDemoScripts\SwitchCameras.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\AbstractAIController.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\StateMachineTransition.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\StrategyComponents\AbstractStateMachineStrategy.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\StrategyComponents\EscapingStrategy.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\StrategyComponents\FiringStrategy.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\StrategyComponents\FollowingStrategy.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\StrategyComponents\IdleStrategy.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\StrategyComponents\ReturningStrategy.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\StrategyComponents\SearchingStrategy.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\TeamBAIController.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\TeamBAIStateMachine.cs" />
     <Compile Include="Assets\Scripts\Tools\Messaging.cs" />
     <Compile Include="Assets\Scripts\Tools\Timer\DestroyTimer.cs" />
     <Compile Include="Assets\Scripts\Tools\Timer\Timer.cs" />

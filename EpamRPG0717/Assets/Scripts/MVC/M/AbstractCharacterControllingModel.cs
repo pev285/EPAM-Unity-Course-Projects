@@ -24,6 +24,8 @@ public abstract class AbstractCharacterControllingModel : MonoBehaviour {
 
     public abstract void StopMoveLeft();
 
+    public abstract void StopAllMovements();
+
 
     public abstract void Jump();
 
@@ -44,6 +46,8 @@ public abstract class AbstractCharacterControllingModel : MonoBehaviour {
 
 
     public abstract bool IsGrounded { get; }
+
+    public abstract bool IsJumping { get; }
 
     public abstract float GetJumpForce();
 

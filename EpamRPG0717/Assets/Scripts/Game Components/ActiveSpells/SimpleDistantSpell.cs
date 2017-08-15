@@ -20,9 +20,17 @@ public class SimpleDistantSpell : AbstractSpell{
         this.action = action;
     }
 
+    private float lastTime = 0;
+
     public override void Cast(GameObject caster, Quaternion castRotation) {
 
-        action.Cast(caster, castRotation);
+        if (Time.time - lastTime > action.CoolingTime)
+        {
+            action.Cast(caster, castRotation);
+
+            lastTime = Time.time;
+
+        }
     }
 }
 

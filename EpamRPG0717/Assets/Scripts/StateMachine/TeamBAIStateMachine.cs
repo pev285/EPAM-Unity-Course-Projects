@@ -11,8 +11,8 @@ public class TeamBAIStateMachine : StateMachine {
     ControllerEventSystem eventSystem;
 
 
-
     public TeamBAIStateMachine(GameObject go, ControllerEventSystem eventSystem) {
+
 
         this.gameObject = go;
         this.eventSystem = eventSystem;
@@ -43,13 +43,13 @@ public class TeamBAIStateMachine : StateMachine {
         transitions.Add(TransitionEvent.IdleToFollowing,
                 new StateMachineTransition(State.Idle, State.Following, TransitionFromIdleToFollowing));
         transitions.Add(TransitionEvent.FollowingToSearching,
-                new StateMachineTransition(State.Following, State.Searching, ComponentAttachingTransition));
+                new StateMachineTransition(State.Following, State.Searching, TransitionFromFollowingToSearching));
         transitions.Add(TransitionEvent.FollowingToEscaping,
-                new StateMachineTransition(State.Following, State.Escaping, ComponentAttachingTransition));
+                new StateMachineTransition(State.Following, State.Escaping, TransitionFromFollowingToEscaping));
         transitions.Add(TransitionEvent.FollowingToFiring,
                 new StateMachineTransition(State.Following, State.Firing, ComponentAttachingTransition));
         transitions.Add(TransitionEvent.SearchingToFollowing,
-                new StateMachineTransition(State.Searching, State.Following, ComponentAttachingTransition));
+                new StateMachineTransition(State.Searching, State.Following, TransitionFromSearchingToFollowing));
         transitions.Add(TransitionEvent.SearchingToReturning,
                 new StateMachineTransition(State.Searching, State.Returning, ComponentAttachingTransition));
         transitions.Add(TransitionEvent.ReturningToFollowing,
@@ -57,7 +57,7 @@ public class TeamBAIStateMachine : StateMachine {
         transitions.Add(TransitionEvent.ReturningToIdle,
                 new StateMachineTransition(State.Returning, State.Idle, ComponentAttachingTransition));
         transitions.Add(TransitionEvent.EscapingToFollowing,
-                new StateMachineTransition(State.Escaping, State.Following, ComponentAttachingTransition));
+                new StateMachineTransition(State.Escaping, State.Following, TransitionFromEscapingToFollowing));
         transitions.Add(TransitionEvent.FiringToFollowing,
                 new StateMachineTransition(State.Firing, State.Following, ComponentAttachingTransition));
         transitions.Add(TransitionEvent.FiringToEscaping,
@@ -77,22 +77,102 @@ public class TeamBAIStateMachine : StateMachine {
 
 
 
-    private void TransitionFromIdleToFollowing(State current, State next) {
+    private void TransitionFromIdleToFollowing(State current, State next)
+    {
 
-        IdleStrategy idleStrategy = gameObject.GetComponent<IdleStrategy>();
-        GameObject target = idleStrategy.GetTarget();
+        IdleStrategy previousStrategy = gameObject.GetComponent<IdleStrategy>();
+        GameObject target = previousStrategy.GetTarget();
 
-        Debug.Log("Transition Idle to Following is working");
-        if (target == null) {
+        if (target == null)
+        {
             Debug.Log("transition: target is null");
         }
 
         ComponentAttachingTransition(current, next);
 
-        FollowingStrategy followingStrategy = gameObject.GetComponent<FollowingStrategy>();
+        FollowingStrategy nextStrategy = gameObject.GetComponent<FollowingStrategy>();
 
-        followingStrategy.Initialize(target, this, eventSystem);
+        nextStrategy.Initialize(target, this, eventSystem);
     }
+
+    private void TransitionFromSearchingToFollowing(State current, State next)
+    {
+
+        SearchingStrategy previousStrategy = gameObject.GetComponent<SearchingStrategy>();
+        GameObject target = previousStrategy.GetTarget();
+
+        if (target == null)
+        {
+            Debug.Log("transition: target is null");
+        }
+
+        ComponentAttachingTransition(current, next);
+
+        FollowingStrategy nextStrategy = gameObject.GetComponent<FollowingStrategy>();
+
+        nextStrategy.Initialize(target, this, eventSystem);
+    }
+
+    private void TransitionFromFollowingToSearching(State current, State next)
+    {
+
+        FollowingStrategy previousStrategy = gameObject.GetComponent<FollowingStrategy>();
+        GameObject target = previousStrategy.GetTarget();
+
+        //Debug.Log("From Following to Escaping");
+        if (target == null)
+        {
+            Debug.Log("transition: target is null");
+        }
+
+        ComponentAttachingTransition(current, next);
+
+        SearchingStrategy nextStrategy = gameObject.GetComponent<SearchingStrategy>();
+
+        nextStrategy.Initialize(null, this, eventSystem);
+    }
+
+
+    private void TransitionFromFollowingToEscaping(State current, State next)
+    {
+
+        FollowingStrategy previousStrategy = gameObject.GetComponent<FollowingStrategy>();
+        GameObject target = previousStrategy.GetTarget();
+
+        //Debug.Log("From Following to Escaping");
+        if (target == null)
+        {
+            Debug.Log("transition: target is null");
+        }
+
+        ComponentAttachingTransition(current, next);
+
+        EscapingStrategy nextStrategy = gameObject.GetComponent<EscapingStrategy>();
+
+        nextStrategy.Initialize(target, this, eventSystem);
+    }
+
+
+    private void TransitionFromEscapingToFollowing(State current, State next)
+    {
+
+        EscapingStrategy previousStrategy = gameObject.GetComponent<EscapingStrategy>();
+        GameObject target = previousStrategy.GetTarget();
+
+        if (target == null)
+        {
+            Debug.Log("transition: target is null");
+        }
+
+        ComponentAttachingTransition(current, next);
+
+        FollowingStrategy nextStrategy = gameObject.GetComponent<FollowingStrategy>();
+
+        nextStrategy.Initialize(target, this, eventSystem);
+    }
+
+
+    /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void ComponentAttachingTransition(State current, State next) {
 
@@ -114,6 +194,11 @@ public class TeamBAIStateMachine : StateMachine {
             if(nextStrategy == null) {
                 nextStrategy = gameObject.AddComponent(nextType);
             }
+
+
+            eventSystem.InvokeStopAllEvent();
+
+
 
             GoToState(next);
         }

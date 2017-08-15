@@ -36,10 +36,11 @@ public class CharacterAnimatorController : MonoBehaviour{
         float forwrardVelocity = model.GetForwardVelocity() * Time.deltaTime;
         float sidewardVelocity = model.GetSidewardVelocity() * Time.deltaTime;
 //        float horizontalRotation = model.GetHorizontalRotation() * Time.deltaTime;
-        float jumpUpForce = model.GetJumpForce();
+        bool jumping = model.IsJumping;
+        bool attacking = model.IsSpecialAttacking;
 
 
-        if (model.IsGrounded && !model.IsSpecialAttacking) {
+        if (model.IsGrounded && !attacking) {
 
             if (forwrardVelocity > 0) {
                 animator.SetBool(runHash, true);
@@ -58,16 +59,16 @@ public class CharacterAnimatorController : MonoBehaviour{
 //            animator.SetBool(walkHash, false);
 //
 //
-//            if (model.IsSpecialAttacking) {
-//                animator.SetTrigger(attackHash);
-//            }
-//            else
-//            {
-//                animator.SetTrigger(jumpHash);
-//            }
+            if (attacking) {
+                animator.SetTrigger(attackHash);
+            }
+            else
+            if (jumping) {
+                animator.SetTrigger(jumpHash);
+            }
         }
 
 
 
-    }
+    } // Update //
 }

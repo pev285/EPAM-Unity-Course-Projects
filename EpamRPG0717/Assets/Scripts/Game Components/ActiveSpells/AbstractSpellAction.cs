@@ -8,4 +8,14 @@ public abstract class AbstractSpellAction : ICastable, INameAndDescription {
 
     public abstract void Cast(GameObject caster, Quaternion castRotation);
 
+
+    protected float coolingTime = 2;
+    public float CoolingTime
+    {
+        get
+        {
+            return coolingTime;
+        }
+    }
+
 }

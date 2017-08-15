@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class TeamBAIController : AbstractAIController {
 
-    TeamBAIStateMachine stateMachine;
+    private TeamBAIStateMachine stateMachine;
 
     private ControllerEventSystem inputES;
+
+    private Death death;
+
 
     public override void SetControllerEventSystem(ControllerEventSystem ces)
     {
@@ -20,11 +23,16 @@ public class TeamBAIController : AbstractAIController {
     //////////////////////////////////////////////////
 
     void Start() {
-
+        death = GetComponent<Death>();
     }
 
     void Update() {
         //stateMachine.ExecuteCurrentState();
+
+        if (death.IsDead)
+        {
+            stateMachine.Stop();
+        }
     }
 
 }

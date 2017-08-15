@@ -33,6 +33,13 @@ public class StateMachine {
 
     //////////////////////////////////////////////
 
+    private bool working = true;
+
+    public void Stop()
+    {
+        working = true;
+    }
+
 
     private State currentState;
     public State CurrentState {
