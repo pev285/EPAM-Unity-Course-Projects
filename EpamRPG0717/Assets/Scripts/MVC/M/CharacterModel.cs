@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -58,7 +59,15 @@ public class CharacterModel : AbstractCharacterControllingModel {
     private Vector3 startingPosition;
 
 
-//////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+
+    private GameObject targetingObject;
+    public void SetTargetingObject(GameObject obj)
+    {
+        targetingObject = obj;
+    }
+
+
 
     private EquippedSpells spells;
 
@@ -105,7 +114,7 @@ public class CharacterModel : AbstractCharacterControllingModel {
         ces.nextSpellEvent += NextSpell;
         ces.previousSpellEvent += PrevSpell;
 
-
+        ces.stopAllEvent += StopAllMovements;
 
     }
 
@@ -116,7 +125,7 @@ public class CharacterModel : AbstractCharacterControllingModel {
         spells.ShiftBackward();
     }
     public void CastSpell() {
-        spells.GetCurrentSpell().Cast(gameObject, GameManager.Instance.GetPlayerCameraRotation());
+        spells.GetCurrentSpell().Cast(gameObject, targetingObject.transform.rotation); //GameManager.Instance.GetPlayerCameraRotation()
     }
 
 
@@ -130,16 +139,23 @@ public void HorizontalRotationOn() {
         turnableAround = false;
     }
 
-///////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
 
 
+    public override void StopAllMovements()
+    {
+        forwardVelocity = 0;
+        sidewardVelocity = 0;
+        horizontalRotationAmount = 0;
+        jumping = false;
+    }
 
 
     public override void MoveForward() {
         forwardVelocity += runSpeed;
-//        if (forwardVelocity > runSpeed) {
-//            forwardVelocity = runSpeed;
-//        }
+        if (forwardVelocity > runSpeed) {
+            forwardVelocity = runSpeed;
+        }
     }
     public override void StopMoveForward() {
         forwardVelocity -= runSpeed;
@@ -150,9 +166,9 @@ public void HorizontalRotationOn() {
 
     public override void MoveBackward() {
         forwardVelocity -= walkSpeed;
-//        if (forwardVelocity < -walkSpeed) {
-//            forwardVelocity = -walkSpeed;
-//        }
+        if (forwardVelocity < -walkSpeed) {
+            forwardVelocity = -walkSpeed;
+        }
     }
     public override void StopMoveBackward() {
         forwardVelocity += walkSpeed;
@@ -163,9 +179,9 @@ public void HorizontalRotationOn() {
 
     public override void MoveRight() {
         sidewardVelocity += walkSpeed;
-//        if (sidewardVelocity > walkSpeed) {
-//            sidewardVelocity = walkSpeed;
-//        }
+        if (sidewardVelocity > walkSpeed) {
+            sidewardVelocity = walkSpeed;
+        }
     }
     public override void StopMoveRight() {
         sidewardVelocity -= walkSpeed;
@@ -176,9 +192,9 @@ public void HorizontalRotationOn() {
 
     public override void MoveLeft() {
         sidewardVelocity -= walkSpeed;
-//        if (sidewardVelocity < -walkSpeed) {
-//            sidewardVelocity = -walkSpeed;
-//        }
+        if (sidewardVelocity < -walkSpeed) {
+            sidewardVelocity = -walkSpeed;
+        }
     }
     public override void StopMoveLeft() {
         sidewardVelocity += walkSpeed;
@@ -223,9 +239,18 @@ public void HorizontalRotationOn() {
         get { return isTargeting; }
     }
 
-    public override bool IsGrounded {
+    public override bool IsGrounded
+    {
         get { return isGrounded; }
     }
+
+
+    public override bool IsJumping
+    {
+        get { return jumping; }
+    }
+
+
 
 
     public override float GetJumpForce() {

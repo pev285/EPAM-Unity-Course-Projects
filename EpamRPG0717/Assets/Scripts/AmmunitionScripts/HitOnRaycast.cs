@@ -16,7 +16,7 @@ public class HitOnRaycast : MonoBehaviour {
 
 
     [SerializeField]
-    private float maxDistance = 30f;
+    private float maxDistance = 50f;
 
 
     void Start() {

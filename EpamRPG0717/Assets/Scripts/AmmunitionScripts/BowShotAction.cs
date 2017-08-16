@@ -15,7 +15,7 @@ public class BowShotAction : AbstractSpellAction{
     }
 
     [SerializeField]
-    private Vector3 relativeSpellCastPosition = new Vector3(0, 2.5f, 2.5f);
+    private Vector3 relativeSpellCastPosition = new Vector3(0, 1.5f, 2f);
 
     private GameObject arrowPrefab;
 

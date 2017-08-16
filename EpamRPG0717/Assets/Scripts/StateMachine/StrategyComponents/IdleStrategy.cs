@@ -3,7 +3,7 @@ using UnityEngine;
 public class IdleStrategy : AbstractStateMachineStrategy {
 
     [SerializeField]
-    private float lookRadius = 10;
+    private float lookRadius = 20;
 
 //    [SerializeField]
 //    private GameObject enemy = null;

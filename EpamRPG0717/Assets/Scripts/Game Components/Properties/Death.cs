@@ -12,6 +12,13 @@ public class Death : MonoBehaviour
 
     [SerializeField]
     private bool isDead = false;
+    public bool IsDead
+    {
+        get
+        {
+            return isDead;
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -41,7 +48,33 @@ public class Death : MonoBehaviour
             }
             ///////////////////////////////////////////////////
         }
-    }
+
+        //*
+         
+        if (IsDead)
+        {
+
+            Component[] components = GetComponents<CharacterModel>();
+
+            foreach (Component c in components)
+            {
+                GameObject.Destroy(c);
+            }
+
+            components = GetComponents<CharacterMover>();
+
+            foreach (Component c in components)
+            {
+                GameObject.Destroy(c);
+            }
+
+        }
+
+        // */
+
+    } // Update() //
 
 
-}
+} // End Of Class //
+
+

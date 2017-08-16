@@ -239,6 +239,8 @@ public class GameManager : MonoBehaviour {
                     new SimpleDistantSpell(new MagnetoSpellAction(magnetPrefab)),
                 });
 
+            CharacterModel model = gob.GetComponent<CharacterModel>();
+
             if (tid.ThisTeam == TeamID.Teams.A)
             {
                 // This is a player controlled character //
@@ -253,6 +255,8 @@ public class GameManager : MonoBehaviour {
 
                 InitCamera();
 
+                model.SetTargetingObject(playerCamera);
+
             } else
             {
                 // This is NPC //
@@ -264,6 +268,8 @@ public class GameManager : MonoBehaviour {
                 cAI.SetControllerEventSystem(ces);
 
                 enemyAIsList.Add(cAI);
+
+                model.SetTargetingObject(gob);
 
             }
         } else
