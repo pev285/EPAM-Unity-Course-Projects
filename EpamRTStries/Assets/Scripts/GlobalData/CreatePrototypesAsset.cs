@@ -4,8 +4,8 @@ using UnityEngine;
 public class CreatePrototypesAsset {
 
     [MenuItem("Assets/Create/PrototypesList")]
-    public static ScriptablePrototypesLists Create() {
-        ScriptablePrototypesLists asset = ScriptableObject.CreateInstance<ScriptablePrototypesLists>();
+    public static ScriptablePrototypesDictionaries Create() {
+        ScriptablePrototypesDictionaries asset = ScriptableObject.CreateInstance<ScriptablePrototypesDictionaries>();
         AssetDatabase.CreateAsset(asset, "Assets/PrototypesList.asset");
         AssetDatabase.SaveAssets();
         return asset;
